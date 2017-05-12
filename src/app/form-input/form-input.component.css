@@ -1,0 +1,16 @@
+md-card {
+    max-width: 25%;
+    margin: 15px 0px;
+}
+
+md-select {
+    width: 100%;
+}
+
+md-select{
+    margin-bottom: 10px;
+}
+
+md-input-container {
+    width: 100%;
+}
