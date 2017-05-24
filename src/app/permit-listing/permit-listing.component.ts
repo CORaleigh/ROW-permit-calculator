@@ -1,0 +1,42 @@
+import { Component, OnInit, Input, DoCheck, KeyValueDiffers } from '@angular/core';
+import { FormControl } from '@angular/forms';  
+import { PermitCard } from '../permit-card';
+
+@Component({
+  selector: 'permit-listing',
+  templateUrl: './permit-listing.component.html',
+  styleUrls: ['./permit-listing.component.css']
+})
+export class PermitListingComponent implements OnInit, Input, DoCheck {
+
+  @Input() cards: Array<PermitCard>;
+  @Input() cardIndex: number;
+  differ: any;
+  permitcard: PermitCard;
+
+  constructor(private differs: KeyValueDiffers) { 
+    this.differ = differs.find({}).create(null);
+  }
+
+  ngOnInit() {
+  }
+
+  ngDoCheck() {
+    let card = this.cards[this.cardIndex];
+    console.log(card);
+    
+    // let changes = this.differ.diff(card.streetClosureType);
+
+    // if (changes) {
+    //   changes.forEachChangedItem(r => {
+    //     console.log(r.key);
+    //     if ((r.key === 'streetClosureType') && r.currentValue != r.previousValue && r.currentValue > 0 && this.cardIndex === card.cardIndex) { 
+    //       this.permitcard.streetClosureType = card.streetClosureType;
+    //       this.permitcard.startDate = card.startDate;
+    //       this.permitcard.endDate = card.endDate;           
+    //     }                                                                 
+    //   });
+    // }
+  }
+
+}

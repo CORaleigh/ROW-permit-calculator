@@ -1,17 +1,44 @@
-<md-card>
+<ng-container *ngFor="let card of cards; let i = index">
+  
+  <md-card *ngIf="i === cardIndex" class="example-card">
 
-  <md-card-content>
-    <form>
-      <md-select [(ngModel)]="selectedStreetType" name="streetType" placeholder="Street Type">
-        <md-option *ngFor ="let type of streetTypes" [value]="type">
-          {{ type.name }}
-        </md-option>
-      </md-select>
-      <md-select placeholder="Obstruction Type">
-        <md-option *ngFor ="let classification of selectedStreetType.classifications" >
-          {{ classification.type }}
-        </md-option>
-      </md-select>
-    </form>
-  </md-card-content>
-</md-card>
+    <md-card-header>
+      <md-card-title><h3>Permit #{{card.cardIndex + 1}}</h3></md-card-title>
+    </md-card-header>
+  
+    <md-card-content>
+      <form>
+        <md-select [(ngModel)]="card.streetName" name="streetType" placeholder="Street Type">
+          <md-option *ngFor ="let type of streetTypes" [value]="type">
+            {{ type.name }}
+          </md-option>
+        </md-select>
+  
+        <md-select [(ngModel)]="card.streetClosureType" (change)="logClassification($event)" placeholder="Obstruction Type" name="obstructionType">
+          <md-option *ngFor ="let classification of card.streetName.classifications" [value]="classification">
+            {{ classification.type }}
+          </md-option>
+        </md-select>
+  
+        <md-input-container>
+          <input [(ngModel)]="card.startDate" name="start-date" mdInput placeholder="Start Date" value="Date" type="date">
+        </md-input-container>
+  
+        <md-input-container>
+          <input [(ngModel)]="card.endDate" name="end-date" mdInput placeholder="End Date" value="Date" type="date">
+        </md-input-container>
+      </form>
+    </md-card-content>
+  
+    <md-card-actions>
+                 
+      <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD</button>
+      
+    </md-card-actions>
+  
+  </md-card>
+  
+  
+
+</ng-container>  
+<permit-listing [cards]="cards" [cardIndex]="cardIndex"></permit-listing>

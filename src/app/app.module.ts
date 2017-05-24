@@ -12,13 +12,19 @@ import { MdCheckboxModule } from '@angular/material';
 import 'hammerjs';
 import { FormInputComponent } from './form-input/form-input.component';
 import { CalculatorOutputComponent } from './calculator-output/calculator-output.component';
+import { MyDateRangePickerModule } from 'mydaterangepicker';
+import {MomentModule} from 'angular2-moment';
+import * as moment from 'moment';
+import { PermitListingComponent } from './permit-listing/permit-listing.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FormInputComponent,
-    CalculatorOutputComponent
+    CalculatorOutputComponent,
+    PermitListingComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +34,9 @@ import { CalculatorOutputComponent } from './calculator-output/calculator-output
     MaterialModule,
     MdButtonModule,
     MdCheckboxModule,
-    CommonModule
+    CommonModule,
+    MyDateRangePickerModule,
+    MomentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

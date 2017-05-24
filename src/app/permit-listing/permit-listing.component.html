@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Current Permits</div>
+
+  <!-- Table -->
+  <table class="table table-bordered">
+    <tr style="font-weight: bold">
+    <th>Street Closure Type</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+  </tr>
+  <tr *ngFor="let card of cards">
+    <td>{{card.streetName.name}}  {{card.streetClosureType.type}}</td>
+    <td>{{card.startDate}}</td>
+    <td>{{card.endDate}}</td>
+  </tr>
+  </table>
+</div>
+
+
+
