@@ -6,7 +6,7 @@
       <md-card-title><h3>Permit #{{card.cardIndex + 1}}</h3></md-card-title>
     </md-card-header>
   
-    <md-card-content>
+    <md-card-content class="md-padding" layout="row" layout-wrap>
       <form>
         <md-select [(ngModel)]="card.streetName" name="streetType" placeholder="Street Type">
           <md-option *ngFor ="let type of streetTypes" [value]="type">
@@ -40,5 +40,7 @@
   
   
 
-</ng-container>  
-<permit-listing [cards]="cards" [cardIndex]="cardIndex"></permit-listing>
+</ng-container> 
+<div style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex"></calculator-output></div> 
+
+<div style="clear:both"><permit-listing [cards]="cards" [cardIndex]="cardIndex"></permit-listing></div>

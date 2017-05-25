@@ -1,6 +1,8 @@
 md-card {
     max-width: 25%;
+    display: inline-block;
     margin: 15px 0px;
+    margin-left: 11%;
 }
 
 md-select {
