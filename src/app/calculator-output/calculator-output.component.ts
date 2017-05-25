@@ -11,6 +11,7 @@ export class CalculatorOutputComponent implements OnInit {
 
   @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
+  dateDirectory: any = {};
   dailyFeeTotal: number;
   reviewFeeTotal: number;
   differ: any;
@@ -26,12 +27,18 @@ export class CalculatorOutputComponent implements OnInit {
   ngDoCheck() {
     let card = this.cards[this.cardIndex];
 
-    this.calcPermit(card);
+    this.gatherCalcInfo(card);
   }
 
-  calcPermit(card) {
-    console.log("fee in output comp", card.streetClosureType.reviewFee);
-    console.log("fee in output comp", card.streetClosureType.dailyFee);
+  gatherCalcInfo(card) {
+     let reviewFee = card.streetClosureType.reviewFee;
+     let dailyFee = card.streetClosureType.dailyFee;
+     let startDate = new Date(card.startDate);
+     let endDate = new Date(card.endDate);
+     let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+     let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //do I need to add one here to include the start date?
+     
+     
   }
 
 }
