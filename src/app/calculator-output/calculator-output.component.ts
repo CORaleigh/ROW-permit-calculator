@@ -13,8 +13,9 @@ export class CalculatorOutputComponent implements OnInit {
   @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
   dateDirectory: any = {};
-  dailyFeeTotal: number;
-  reviewFeeTotal: number;
+  dailyFeeTotal: number = 0;
+  reviewFeeTotal: number = 0;
+  totalTotal: number;
   differ: any;
   permitcard: PermitCard;
 
@@ -42,6 +43,7 @@ export class CalculatorOutputComponent implements OnInit {
      let b: any = moment(startDate);
      let diffDays = a.diff(b, 'days');
      
+     
      for(var i = 1; i < (diffDays + 2); i++) {
        let newDate: any = moment(startDate).add(i, 'days');
        newDate = newDate[Object.keys(newDate)[5]];
@@ -49,10 +51,30 @@ export class CalculatorOutputComponent implements OnInit {
        //let newDate = new Date(startDate.setTime( startDate.getTime() + (i * 43200000) ));
        //console.log(diffDays);
        //newDate._d
+
+       if(this.dateDirectory[newDate]) {
+         this.dateDirectory[newDate].daily.push(dailyFee);
+         this.dateDirectory[newDate].review.push(reviewFee);
+       } else {
+         this.dateDirectory[newDate] = {
+         daily: [dailyFee],
+         review: [reviewFee]
+       }
+
+       }
+
+
        
        
        console.log('new date is', newDate);
      }
+
+     for (var date in this.dateDirectory) {
+       this.dailyFeeTotal += Math.max.apply(null, this.dateDirectory[date].daily);
+       // if there's more than one in reviewTotal then add those and return for one value
+       // of reviewTotal?? Otherwise just return the one value 
+     }
+
   }
 
 }
