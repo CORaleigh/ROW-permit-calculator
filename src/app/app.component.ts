@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { SelectedObstructionService } from './selected-obstruction.service';
 import { Obstruction } from './obstruction';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',

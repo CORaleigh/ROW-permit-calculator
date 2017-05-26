@@ -23,7 +23,7 @@ export class PermitListingComponent implements OnInit, Input, DoCheck {
 
   ngDoCheck() {
     let card = this.cards[this.cardIndex];
-    console.log(card);
+    //console.log(card);
     
     // let changes = this.differ.diff(card.streetClosureType);
 
