@@ -15,7 +15,7 @@ export class CalculatorOutputComponent implements OnInit {
   dateDirectory: any = {};
   dailyFeeTotal: number = 0;
   reviewFeeTotal: number = 0;
-  totalTotal: number;
+  totalTotal: number = 0;
   differ: any;
   permitcard: PermitCard;
 
@@ -28,8 +28,11 @@ export class CalculatorOutputComponent implements OnInit {
 
   ngDoCheck() {
     let card = this.cards[this.cardIndex];
+    let changes = this.differ.diff(card);
 
-    this.gatherCalcInfo(card);
+    if(changes) {
+      this.gatherCalcInfo(card);
+    }
   }
 
   gatherCalcInfo(card) {
@@ -37,8 +40,6 @@ export class CalculatorOutputComponent implements OnInit {
      let dailyFee = card.streetClosureType.dailyFee;
      let startDate = new Date(card.startDate);
      let endDate = new Date(card.endDate);
-    //  let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-    //  let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24) + 1); //do I need to add one here to include the start date?
      let a: any = moment(endDate);
      let b: any = moment(startDate);
      let diffDays = a.diff(b, 'days');
@@ -48,9 +49,7 @@ export class CalculatorOutputComponent implements OnInit {
        let newDate: any = moment(startDate).add(i, 'days');
        newDate = newDate[Object.keys(newDate)[5]];
        newDate = moment(newDate).format("MM DD YYYY");
-       //let newDate = new Date(startDate.setTime( startDate.getTime() + (i * 43200000) ));
-       //console.log(diffDays);
-       //newDate._d
+
 
        if(this.dateDirectory[newDate]) {
          this.dateDirectory[newDate].daily.push(dailyFee);
@@ -71,9 +70,16 @@ export class CalculatorOutputComponent implements OnInit {
 
      for (var date in this.dateDirectory) {
        this.dailyFeeTotal += Math.max.apply(null, this.dateDirectory[date].daily);
-       // if there's more than one in reviewTotal then add those and return for one value
-       // of reviewTotal?? Otherwise just return the one value 
+
+       let sum: number = this.dateDirectory[date].review.reduce( (acc, val) => acc + val);
+
+       if (this.reviewFeeTotal <= sum) {
+         this.reviewFeeTotal = sum;
+       }
+  
      }
+
+     this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
 
   }
 

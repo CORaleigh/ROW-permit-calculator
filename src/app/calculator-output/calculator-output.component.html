@@ -6,49 +6,33 @@
         <md-list>
             <md-list-item>
                 <h3 md-line>Daily Fee Total</h3>
-                <p md-line>
+                <p md-line *ngIf="this.dailyFeeTotal > 0">
                     {{this.dailyFeeTotal}}
                 </p>
-                <p md-line>
+                <p md-line *ngIf="this.dailyFeeTotal === 0">
                     --
-                </p>                
+                </p>               
             </md-list-item>
             <md-list-item>
-                <h3 md-line>Building Permit</h3>
-                <p md-line>
-                    hi
+                <h3 md-line>Permit Review Fee Total</h3>
+                <p md-line *ngIf="this.reviewFeeTotal > 0">
+                    {{this.reviewFeeTotal}}
                 </p>
                 <p md-line>
-                    <small><em>hi</em></small>
                 </p>                     
-                <p md-line>
+                <p md-line *ngIf="this.reviewFeeTotal === 0">
                     --
-                </p>                   
+                </p>                  
             </md-list-item>
             <md-list-item>
-                <h3 md-line>Electrical Permit</h3>
-                <p md-line>
-                  hi
-                </p>
-                <p md-line>
-                    ayee
-                </p>                        
-                <p md-line>
+                <h3 md-line>Permit Total</h3>
+                <p md-line *ngIf="this.totalTotal > 0">
+                  {{this.totalTotal}}
+                </p>                       
+                <p md-line *ngIf="this.totalTotal === 0">
                     --
                 </p>                   
-            </md-list-item>
-            <md-list-item>
-                <h3 md-line>Mechanical Permit</h3>
-                <p md-line>
-                    hi
-                </p>
-                <p md-line>
-                    hi
-                </p>                
-                <p md-line>
-                    --
-                </p>                   
-            </md-list-item>            
+            </md-list-item>           
         </md-list>
     </md-card-content>
     <md-card-actions style="margin:0 auto;">
