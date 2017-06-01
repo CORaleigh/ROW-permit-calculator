@@ -14,7 +14,7 @@
           </md-option>
         </md-select>
   
-        <md-select [(ngModel)]="card.streetClosureType" (change)="logClassification($event)" placeholder="Obstruction Type" name="obstructionType">
+        <md-select [(ngModel)]="card.streetClosureType" placeholder="Obstruction Type" name="obstructionType">
           <md-option *ngFor ="let classification of card.streetName.classifications" [value]="classification">
             {{ classification.type }}
           </md-option>

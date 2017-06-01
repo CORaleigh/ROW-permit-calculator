@@ -74,57 +74,13 @@ export class FormInputComponent implements OnInit {
     
   }
 
-  //this is from attempting to do it Justin's way, still trying to figure it out...
-  getFees() {
-    this.feesService.getFeeSchedule();
-  }
-
-  
-
-  logClassification(event) {
-    console.log(event.value.dailyFee);
-    console.log(event.value.reviewFee);
-    // let dailyFee = event.value.dailyFee;
-    // let totalDailyFee = dailyFee * this.duration;
-    // console.log(totalDailyFee);
-  }
-
-  // this.startDate = moment();
-  // this.endDate = moment();
-  // this.diff = this.endDate.diff(this.startDate);
-
-  // createObjectKeys(duration){
-  //   for(var i = 0; i < duration; i++) {
-  //     let 
-  //   }
-  // }
-
-  logDates(){
-    console.log("start:", this.startDate + " " + "end:", this.endDate);
-    let start: any = new Date(this.startDate);
-    let end: any = new Date(this.endDate);
-    let elapsed: any = (end - start) / 86400000;
-
-    console.log(elapsed);
-    //this.createObjectKeys(elapsed);
-    
-  }
-
-  createDateRange(event) {
-    console.log(event);
-  }
-
-  getSelectedObstructions(){
-    this.selectedObstructionService.getObstructions();
-  }
-
   addCard() {
     let permitcard = new PermitCard();
     permitcard.streetName = ""; 
     permitcard.cardIndex = 0;
     permitcard.streetClosureType = "";
-    permitcard.startDate;
-    permitcard.endDate;
+    permitcard.startDate = "";
+    permitcard.endDate = "";
     this.cards.push(permitcard);
     this.cardIndex += 1;
   }

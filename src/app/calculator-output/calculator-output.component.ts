@@ -29,9 +29,16 @@ export class CalculatorOutputComponent implements OnInit {
   ngDoCheck() {
     let card = this.cards[this.cardIndex];
     let changes = this.differ.diff(card);
+    console.log('pre conditional', card);
 
     if(changes) {
-      this.gatherCalcInfo(card);
+      changes.forEachChangedItem(r => {
+        console.log(r.key);
+        if ((r.key) && r.currentValue != r.previousValue && this.cardIndex === card.cardIndex) {
+          console.log("getting through the conditional", card);
+          this.gatherCalcInfo(card);           
+        }                                                                 
+      });
     }
   }
 

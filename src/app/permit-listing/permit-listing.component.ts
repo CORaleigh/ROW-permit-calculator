@@ -23,20 +23,6 @@ export class PermitListingComponent implements OnInit, Input, DoCheck {
 
   ngDoCheck() {
     let card = this.cards[this.cardIndex];
-    //console.log(card);
-    
-    // let changes = this.differ.diff(card.streetClosureType);
-
-    // if (changes) {
-    //   changes.forEachChangedItem(r => {
-    //     console.log(r.key);
-    //     if ((r.key === 'streetClosureType') && r.currentValue != r.previousValue && r.currentValue > 0 && this.cardIndex === card.cardIndex) { 
-    //       this.permitcard.streetClosureType = card.streetClosureType;
-    //       this.permitcard.startDate = card.startDate;
-    //       this.permitcard.endDate = card.endDate;           
-    //     }                                                                 
-    //   });
-    // }
   }
 
 }
