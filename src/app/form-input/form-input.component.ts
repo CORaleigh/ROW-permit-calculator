@@ -23,7 +23,7 @@ export class FormInputComponent implements OnInit {
   //selectedStreetType: StreetType;
   cards: Array<PermitCard> = [];
   cardIndex: number;
-  selectedObstructions: Array<Obstruction>;
+  selectedObstructions: Array<Obstruction>;ˇ
   private reviewInfo: any;
   private startDate: any;
   private endDate: any;
@@ -78,6 +78,7 @@ export class FormInputComponent implements OnInit {
     let permitcard = new PermitCard();
     permitcard.streetName = ""; 
     permitcard.cardIndex = 0;
+    permitcard.cardIndex = this.cardIndex;
     permitcard.streetClosureType = "";
     permitcard.startDate = "";
     permitcard.endDate = "";

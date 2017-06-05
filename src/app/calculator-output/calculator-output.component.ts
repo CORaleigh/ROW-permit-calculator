@@ -27,14 +27,14 @@ export class CalculatorOutputComponent implements OnInit {
   }
 
   ngDoCheck() {
-    let card = this.cards[this.cardIndex];
+    let card = this.cards[this.cards.length - 1];
     let changes = this.differ.diff(card);
     console.log('pre conditional', card);
 
     if(changes) {
       changes.forEachChangedItem(r => {
         console.log(r.key);
-        if ((r.key) && r.currentValue != r.previousValue && this.cardIndex === card.cardIndex) {
+        if ((r.key !="cardIndex" && r.currentValue != "") && r.currentValue != r.previousValue && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
           console.log("getting through the conditional", card);
           this.gatherCalcInfo(card);           
         }                                                                 
