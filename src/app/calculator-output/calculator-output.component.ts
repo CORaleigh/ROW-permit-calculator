@@ -29,7 +29,6 @@ export class CalculatorOutputComponent implements OnInit {
   ngDoCheck() {
     let card = this.cards[this.cards.length - 1];
     let changes = this.differ.diff(card);
-    console.log('pre conditional', card);
 
     if(changes) {
       changes.forEachChangedItem(r => {
@@ -69,23 +68,58 @@ export class CalculatorOutputComponent implements OnInit {
 
        }
 
-
-       
-       
-       console.log('new date is', newDate);
      }
 
-     for (var date in this.dateDirectory) {
-       this.dailyFeeTotal += Math.max.apply(null, this.dateDirectory[date].daily);
 
-       let sum: number = this.dateDirectory[date].review.reduce( (acc, val) => acc + val);
+    //  for (var date in this.dateDirectory) {
+    //    let dailySum: number = Math.max.apply(null, this.dateDirectory[date].daily);
+    //   //  this.dailyFeeTotal += dailySum;
+    //    if(this.dailyFeeTotal == dailySum) {
+    //      this.dailyFeeTotal = this.dailyFeeTotal;
+    //    } else if(this.dailyFeeTotal < dailySum) {
+    //      this.dailyFeeTotal = dailySum;
+    //    } else {
+    //      this.dailyFeeTotal += dailySum;
+    //    }
+        
 
-       if (this.reviewFeeTotal <= sum) {
+    //    let sum: number = this.dateDirectory[date].review.reduce( (acc, val) => acc + val);
+
+    //    if (this.reviewFeeTotal < sum) {
+    //      this.reviewFeeTotal = sum;
+    //    }
+    //    console.log(this.dateDirectory);
+       
+    //  }
+
+     //this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
+
+     let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
+
+     for(var i = 0; i < 1; i++) {
+       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily);
+      this.dailyFeeTotal = dailySum * (diffDays + 1);
+      //  if(this.dailyFeeTotal == dailySum) {
+      //    this.dailyFeeTotal = this.dailyFeeTotal;
+      //  } else if(this.dailyFeeTotal < dailySum) {
+      //    this.dailyFeeTotal = dailySum;
+      //  } else {
+      //    this.dailyFeeTotal += dailySum;
+      //  }
+        
+     }
+
+     for(var i = 0; i < dateDirectoryKeys.length; i++) {
+       let sum: number = this.dateDirectory[dateDirectoryKeys[i]].review.reduce( (acc, val) => acc + val);
+
+       if (this.reviewFeeTotal < sum) {
          this.reviewFeeTotal = sum;
+       } else if(this.reviewFeeTotal == sum) {
+         this.reviewFeeTotal = sum;
+       } else {
+         this.reviewFeeTotal += sum;
        }
-  
      }
-
      this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
 
   }
