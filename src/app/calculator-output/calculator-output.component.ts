@@ -42,85 +42,89 @@ export class CalculatorOutputComponent implements OnInit {
   }
 
   gatherCalcInfo(card) {
-     let reviewFee = card.streetClosureType.reviewFee;
-     let dailyFee = card.streetClosureType.dailyFee;
-     let startDate = new Date(card.startDate);
-     let endDate = new Date(card.endDate);
-     let a: any = moment(endDate);
-     let b: any = moment(startDate);
-     let diffDays = a.diff(b, 'days');
-     
-     
-     for(var i = 1; i < (diffDays + 2); i++) {
-       let newDate: any = moment(startDate).add(i, 'days');
-       newDate = newDate[Object.keys(newDate)[5]];
-       newDate = moment(newDate).format("MM DD YYYY");
+
+    let reviewFee = card.streetClosureType.reviewFee;
+    let dailyFee = card.streetClosureType.dailyFee;
+    let startDate = new Date(card.startDate);
+    let endDate = new Date(card.endDate);
+    let a: any = moment(endDate);
+    let b: any = moment(startDate);
+    let diffDays = a.diff(b, 'days');
+    
+    
+    for(var i = 1; i < (diffDays + 2); i++) {
+      let newDate: any = moment(startDate).add(i, 'days');
+      newDate = newDate[Object.keys(newDate)[5]];
+      newDate = moment(newDate).format("MM DD YYYY");
 
 
-       if(this.dateDirectory[newDate]) {
-         this.dateDirectory[newDate].daily.push(dailyFee);
-         this.dateDirectory[newDate].review.push(reviewFee);
-       } else {
-         this.dateDirectory[newDate] = {
-         daily: [dailyFee],
-         review: [reviewFee]
-       }
+      if(this.dateDirectory[newDate]) {
+        this.dateDirectory[newDate].daily.push(dailyFee);
+        this.dateDirectory[newDate].review.push(reviewFee);
+      } else {
+        this.dateDirectory[newDate] = {
+        daily: [dailyFee],
+        review: [reviewFee]
+      }
 
-       }
+      }
 
-     }
+    }
 
+  // This block not working for multiple permits in same date range 
+  //  for (var date in this.dateDirectory) {
+  //    let dailySum: number = Math.max.apply(null, this.dateDirectory[date].daily);
+  //   //  this.dailyFeeTotal += dailySum;
+  //    if(this.dailyFeeTotal == dailySum) {
+  //      this.dailyFeeTotal = this.dailyFeeTotal;
+  //    } else if(this.dailyFeeTotal < dailySum) {
+  //      this.dailyFeeTotal = dailySum;
+  //    } else {
+  //      this.dailyFeeTotal += dailySum;
+  //    }
+      
 
-    //  for (var date in this.dateDirectory) {
-    //    let dailySum: number = Math.max.apply(null, this.dateDirectory[date].daily);
-    //   //  this.dailyFeeTotal += dailySum;
-    //    if(this.dailyFeeTotal == dailySum) {
-    //      this.dailyFeeTotal = this.dailyFeeTotal;
-    //    } else if(this.dailyFeeTotal < dailySum) {
-    //      this.dailyFeeTotal = dailySum;
-    //    } else {
-    //      this.dailyFeeTotal += dailySum;
-    //    }
-        
+  //    let sum: number = this.dateDirectory[date].review.reduce( (acc, val) => acc + val);
 
-    //    let sum: number = this.dateDirectory[date].review.reduce( (acc, val) => acc + val);
+  //    if (this.reviewFeeTotal < sum) {
+  //      this.reviewFeeTotal = sum;
+  //    }
+  //    console.log(this.dateDirectory);
+      
+  //  }
 
-    //    if (this.reviewFeeTotal < sum) {
-    //      this.reviewFeeTotal = sum;
-    //    }
-    //    console.log(this.dateDirectory);
-       
+  //   this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
+
+    let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
+    this.dailyFeeTotal = 0;
+    this.reviewFeeTotal = 0;
+   
+
+    for(var i = 0; i < 1; i++) { // instead of 1, dateDirectoryKeys.length? 
+      let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily); //only gets the first key's daily? 
+    this.dailyFeeTotal = dailySum * (diffDays + 1); //diffDays is problematic, it's the diff between the most recently entered dates. need keys.length probably
+    //  if(this.dailyFeeTotal == dailySum) {
+    //    this.dailyFeeTotal = this.dailyFeeTotal;
+    //  } else if(this.dailyFeeTotal < dailySum) {
+    //    this.dailyFeeTotal = dailySum;
+    //  } else {
+    //    this.dailyFeeTotal += dailySum;
     //  }
+      
+    }
 
-     //this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
+    for(var i = 0; i < dateDirectoryKeys.length; i++) {
+      let sum: number = this.dateDirectory[dateDirectoryKeys[i]].review.reduce( (acc, val) => acc + val);
 
-     let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
-
-     for(var i = 0; i < 1; i++) {
-       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily);
-      this.dailyFeeTotal = dailySum * (diffDays + 1);
-      //  if(this.dailyFeeTotal == dailySum) {
-      //    this.dailyFeeTotal = this.dailyFeeTotal;
-      //  } else if(this.dailyFeeTotal < dailySum) {
-      //    this.dailyFeeTotal = dailySum;
-      //  } else {
-      //    this.dailyFeeTotal += dailySum;
-      //  }
-        
-     }
-
-     for(var i = 0; i < dateDirectoryKeys.length; i++) {
-       let sum: number = this.dateDirectory[dateDirectoryKeys[i]].review.reduce( (acc, val) => acc + val);
-
-       if (this.reviewFeeTotal < sum) {
-         this.reviewFeeTotal = sum;
-       } else if(this.reviewFeeTotal == sum) {
-         this.reviewFeeTotal = sum;
-       } else {
-         this.reviewFeeTotal += sum;
-       }
-     }
-     this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
+      if (this.reviewFeeTotal < sum) { //problems with the logic here, need to figure out how to distinguish between two permit types 
+        this.reviewFeeTotal = sum;
+      } else if(this.reviewFeeTotal == sum) {
+        this.reviewFeeTotal = sum;
+      } else {
+        this.reviewFeeTotal += sum;
+      }
+    }
+    this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
 
   }
 
