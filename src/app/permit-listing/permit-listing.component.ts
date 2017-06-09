@@ -25,4 +25,9 @@ export class PermitListingComponent implements OnInit, Input, DoCheck {
     let card = this.cards[this.cardIndex];
   }
 
+  deleteCard() {
+    this.cards.splice(this.cardIndex, 1);
+    this.cardIndex--; //not sure about this one 
+  }
+
 }

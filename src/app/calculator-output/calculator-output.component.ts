@@ -100,7 +100,7 @@ export class CalculatorOutputComponent implements OnInit {
     this.reviewFeeTotal = 0;
    
 
-    for(var i = 0; i < 1; i++) { // instead of 1, dateDirectoryKeys.length? 
+    for(var i = 0; i < dateDirectoryKeys.length; i++) { // instead of 1, dateDirectoryKeys.length? 
       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily); //only gets the first key's daily? 
     this.dailyFeeTotal = dailySum * (diffDays + 1); //diffDays is problematic, it's the diff between the most recently entered dates. need keys.length probably
     //  if(this.dailyFeeTotal == dailySum) {
