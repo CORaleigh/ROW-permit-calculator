@@ -31,8 +31,12 @@
     </md-card-content>
   
     <md-card-actions>
-                 
+
+      <button md-icon-button (click)="getPreviousCard()" *ngIf="cards.length > 1 && cardIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
+      <button md-icon-button (click)="getNextCard()" *ngIf="cards.length > 1 && cardIndex != cards.length - 1" mdTooltip="Next Building Type"><md-icon>keyboard_arrow_right</md-icon></button>           
       <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD</button>
+      <button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove Building Type">REMOVE</button>
+
       
     </md-card-actions>
   

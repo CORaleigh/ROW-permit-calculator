@@ -52,6 +52,7 @@ export class CalculatorOutputComponent implements OnInit {
     let b: any = moment(startDate);
     let diffDays = a.diff(b, 'days');
 
+    //push review fee to the main array that we will reduce, as soon as a new card is added
     this.sourceOfTruthReviewFeeArray.push(reviewFee);
 
     

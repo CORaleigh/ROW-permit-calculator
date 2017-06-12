@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StreetType } from '../street-type';
 import { StreetClass } from '../street-class';
 import { FeesService } from '../fees.service';
-import { IMyDrpOptions } from 'mydaterangepicker';
 import { MomentModule } from 'angular2-moment';
 import * as moment from 'moment';
 import { Obstruction } from '../obstruction';
@@ -27,22 +26,13 @@ export class FormInputComponent implements OnInit {
   private reviewInfo: any;
   private startDate: any;
   private endDate: any;
-  //private diff: number = this.endDate.diff(this.startDate);
   private formattedNum: number;
-  private myDateRangePickerOptions: IMyDrpOptions = {
-    dateFormat: 'mm-dd-yyyy'
-  };
+
   constructor(private feesService: FeesService, private selectedObstructionService: SelectedObstructionService) { }
 
   ngOnInit() {
     this.cardIndex = -1;
-    // let permitcard = new PermitCard();
-    // permitcard.streetName = ""; 
-    // permitcard.cardIndex = 0;
-    // permitcard.streetClosureType = "";
-    // permitcard.startDate;
-    // permitcard.endDate;
-    // this.cards.push(permitcard);
+   
     this.addCard();
 
     this.streetTypes = [
@@ -83,6 +73,20 @@ export class FormInputComponent implements OnInit {
     permitcard.startDate = "";
     permitcard.endDate = "";
     this.cards.push(permitcard);
+    this.cardIndex += 1;
+  }
+
+  removeCard(cards: Array<PermitCard>, index: number) {
+    let card = cards[this.cardIndex];
+    cards.splice(index, 1);
+    this.cardIndex -= 1;
+  }  
+
+  getPreviousCard() {
+    this.cardIndex -= 1;
+  }
+
+  getNextCard() {
     this.cardIndex += 1;
   }
 
