@@ -57,6 +57,14 @@ export class FormInputComponent implements OnInit {
         {type: "Minor - AUX Review", reviewFee: 136, dailyFee: 32},
         {type: "Minor - Partial Review", reviewFee: 136, dailyFee: 16},
         {type: "Minor - Maintenance Review", reviewFee: 68, dailyFee: 16},
+      ]},
+      {id: 4, name: "Miscellaneous Right-of-Way Work", classifications: [
+        {type: "Misc. - Major - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
+        {type: "Misc. - Major - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
+        {type: "Misc. - Major - House Move - Review", reviewFee: 136, dailyFee: 0},
+        {type: "Misc. - Minor - House Move - Review", reviewFee: 136, dailyFee: 0},
+        {type: "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 32},
+        {type: "Misc. - Minor - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 16}
       ]}
     ];
      //this.selectedStreetType = new StreetType(0, "", []);
