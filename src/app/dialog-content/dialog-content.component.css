@@ -1,0 +1,23 @@
+li {
+    list-style: circle;
+}
+
+li > span { 
+    display: block;
+}
+
+.heading {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.subheading {
+    display: inline-block;
+    font-style: italic;
+    padding-top: 15px;
+}
+
+.subheading > span {
+    font-style: none;
+    list-style: disc outside none;
+}
