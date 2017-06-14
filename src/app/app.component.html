@@ -1,8 +1,17 @@
 
 <md-toolbar color="primary">
   <span>Right of Way Permit Calculator</span>
+
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>more_vert</md-icon>
+  </button>
 </md-toolbar>
 
-<form-input></form-input>
+<md-menu #menu="mdMenu">
+    <button md-menu-item (click)="openDialog()">
+      <md-icon>info_outline</md-icon>
+      <span>Street Descriptions</span>
+    </button>
+</md-menu>
 
-  
+<form-input></form-input>

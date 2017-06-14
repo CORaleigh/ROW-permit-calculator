@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MdDialog } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +17,7 @@ import { MyDateRangePickerModule } from 'mydaterangepicker';
 import {MomentModule} from 'angular2-moment';
 import * as moment from 'moment';
 import { PermitListingComponent } from './permit-listing/permit-listing.component';
+import { DialogContentComponent } from './dialog-content/dialog-content.component';
 
 
 
@@ -24,7 +26,8 @@ import { PermitListingComponent } from './permit-listing/permit-listing.componen
     AppComponent,
     FormInputComponent,
     CalculatorOutputComponent,
-    PermitListingComponent
+    PermitListingComponent,
+    DialogContentComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { PermitListingComponent } from './permit-listing/permit-listing.componen
     MyDateRangePickerModule,
     MomentModule
   ],
+  entryComponents: [DialogContentComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
