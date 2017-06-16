@@ -5,6 +5,7 @@ import { SelectedObstructionService } from './selected-obstruction.service';
 import { Obstruction } from './obstruction';
 import * as moment from 'moment';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
+import { SplashDialogComponent } from './splash-dialog/splash-dialog.component'; 
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,9 @@ export class AppComponent implements OnInit {
   selectedObstructions: Obstruction[];
 
   ngOnInit(): void {
-    this.getSelectedObstructions();
+    window.setTimeout(() => {
+      this.dialog.open(SplashDialogComponent);
+    }, 500);
   }
 
   constructor(private selectedObstructionService: SelectedObstructionService, public dialog: MdDialog) { }

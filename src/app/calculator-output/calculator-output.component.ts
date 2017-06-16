@@ -52,17 +52,17 @@ export class CalculatorOutputComponent implements OnInit {
     let b: any = moment(startDate);
     let diffDays = a.diff(b, 'days');
 
-    //push review fee to the main array that we will reduce, as soon as a new card is added
+    //push review fee to the main array as soon as a new card is added
     this.sourceOfTruthReviewFeeArray.push(reviewFee);
 
     
-    
+    //create the map of dates as keys given the date range
     for(var i = 1; i < (diffDays + 2); i++) {
       let newDate: any = moment(startDate).add(i, 'days');
       newDate = newDate[Object.keys(newDate)[5]];
       newDate = moment(newDate).format("MM DD YYYY");
 
-
+      // if the date doesn't exist, create it; store daily fee
       if(this.dateDirectory[newDate]) {
         this.dateDirectory[newDate].daily.push(dailyFee);
       } else {
@@ -81,7 +81,8 @@ export class CalculatorOutputComponent implements OnInit {
       this.dailyFeeTotal += dailySum; 
     }
 
-    this.reviewFeeTotal = this.sourceOfTruthReviewFeeArray.reduce( (prev, curr) => prev + curr ); 
+    // Just want highest review fee for one plan submission
+    this.reviewFeeTotal = Math.max.apply(null, this.sourceOfTruthReviewFeeArray);
     this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
 
   }

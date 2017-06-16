@@ -18,6 +18,7 @@ import {MomentModule} from 'angular2-moment';
 import * as moment from 'moment';
 import { PermitListingComponent } from './permit-listing/permit-listing.component';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
+import { SplashDialogComponent } from './splash-dialog/splash-dialog.component';
 
 
 
@@ -27,7 +28,8 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
     FormInputComponent,
     CalculatorOutputComponent,
     PermitListingComponent,
-    DialogContentComponent
+    DialogContentComponent,
+    SplashDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
     MyDateRangePickerModule,
     MomentModule
   ],
-  entryComponents: [DialogContentComponent],
+  entryComponents: [DialogContentComponent, SplashDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
