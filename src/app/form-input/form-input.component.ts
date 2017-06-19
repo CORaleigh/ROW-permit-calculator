@@ -37,32 +37,32 @@ export class FormInputComponent implements OnInit {
 
     this.streetTypes = [
       {id: 1, name: "Full Street Closure", classifications:[
-        {type: "Major - Striped Review", reviewFee: 814, dailyFee: 81},
-        {type: "Major - Non-Striped Review", reviewFee: 543, dailyFee: 65},
-        {type: "Minor - Striped Review", reviewFee: 543, dailyFee: 32},
-        {type: "Minor - Non-Striped Review", reviewFee: 271, dailyFee: 21}
+        {type: "Major - Striped", reviewFee: 814, dailyFee: 81},
+        {type: "Major - Non-Striped", reviewFee: 543, dailyFee: 65},
+        {type: "Minor - Striped", reviewFee: 543, dailyFee: 32},
+        {type: "Minor - Non-Striped", reviewFee: 271, dailyFee: 21}
       ]},
       {id: 2, name: "Lane Obstruction", classifications:[
-        {type: "Major - Striped Review", reviewFee: 407, dailyFee: 32},
-        {type: "Major - Non-Striped Review", reviewFee: 136, dailyFee: 32},
-        {type: "Minor - Striped Review", reviewFee: 271, dailyFee: 32},
-        {type: "Minor - Non-Striped Review", reviewFee: 136, dailyFee: 32},
+        {type: "Major - Striped", reviewFee: 407, dailyFee: 32},
+        {type: "Major - Non-Striped", reviewFee: 136, dailyFee: 32},
+        {type: "Minor - Striped", reviewFee: 271, dailyFee: 32},
+        {type: "Minor - Non-Striped", reviewFee: 136, dailyFee: 32},
       ]},
       {id: 3, name: "Sidewalk Obstruction", classifications: [
-        {type: "Major - Full Closure Review", reviewFee: 814, dailyFee: 48},
-        {type: "Major - AUX Review", reviewFee: 407, dailyFee: 32},
-        {type: "Major - Partial Closure Review", reviewFee: 407, dailyFee: 48},
-        {type: "Major - Maintenance Review", reviewFee: 136, dailyFee: 16},
-        {type: "Minor - Full Closure Review", reviewFee: 271, dailyFee: 32},
-        {type: "Minor - AUX Review", reviewFee: 136, dailyFee: 32},
-        {type: "Minor - Partial Review", reviewFee: 136, dailyFee: 16},
-        {type: "Minor - Maintenance Review", reviewFee: 68, dailyFee: 16},
+        {type: "Major - Full Closure", reviewFee: 814, dailyFee: 48},
+        {type: "Major - AUX", reviewFee: 407, dailyFee: 32},
+        {type: "Major - Partial Closure", reviewFee: 407, dailyFee: 48},
+        {type: "Major - Maintenance", reviewFee: 136, dailyFee: 16},
+        {type: "Minor - Full Closure", reviewFee: 271, dailyFee: 32},
+        {type: "Minor - AUX", reviewFee: 136, dailyFee: 32},
+        {type: "Minor - Partial", reviewFee: 136, dailyFee: 16},
+        {type: "Minor - Maintenance", reviewFee: 68, dailyFee: 16},
       ]},
       {id: 4, name: "Miscellaneous Right-of-Way Work", classifications: [
         {type: "Misc. - Major - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
         {type: "Misc. - Major - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
-        {type: "Misc. - Major - House Move - Review", reviewFee: 136, dailyFee: 0},
-        {type: "Misc. - Minor - House Move - Review", reviewFee: 136, dailyFee: 0},
+        {type: "Misc. - Major - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Misc. - Minor - House Move", reviewFee: 136, dailyFee: 0},
         {type: "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 32},
         {type: "Misc. - Minor - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 16}
       ]}
@@ -86,9 +86,20 @@ export class FormInputComponent implements OnInit {
 
   removeCard(cards: Array<PermitCard>, index: number) {
     let card = cards[this.cardIndex];
-    cards.splice(index, 1);
-    this.cardIndex -= 1;
+    if (this.cardIndex === 0) {
+      cards.shift();
+      this.cardIndex += 1;
+      cards.forEach(card => {
+        card.cardIndex -= 1;
+      });
+    } else {
+      cards.splice(index, 1);
+      this.cardIndex -= 1;
+    }
+    
+    // this.cardIndex -= 1;
   }  
+
 
   getPreviousCard() {
     this.cardIndex -= 1;
