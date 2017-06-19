@@ -8,11 +8,15 @@
     <th>Street Closure Type</th>
     <th>Start Date</th>
     <th>End Date</th>
+    <th>Duration</th>
   </tr>
   <tr *ngFor="let card of cards">
     <td>{{card.streetName.name}}  {{card.streetClosureType.type}}</td>
     <td>{{card.startDate}}</td>
     <td>{{card.endDate}}</td>
+    <td>
+      <p md-line *ngIf="card.calcDuration() > 0">{{card.calcDuration()}}</p>
+    </td>
   </tr>
   </table>
 </div>
