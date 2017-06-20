@@ -1,4 +1,13 @@
 md-card {
-    min-width: 25%;
+    min-width: 400px;
     margin: 15px 0px;
+    margin-left: -39%;
+    margin-right: 50%;
+}
+
+@media (max-width: 768px) {
+  md-card {
+    margin-left: 0px;
+    margin-right: 0; 
+  }
 }

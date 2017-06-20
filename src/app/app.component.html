@@ -8,16 +8,15 @@
   <span>Right of Way Permit Calculator</span>
 
   <button md-icon-button [mdMenuTriggerFor]="menu">
-    <md-icon>more_vert</md-icon>
+    <md-icon>info_outline</md-icon>
   </button>
 </md-toolbar>
 
 
 <md-menu #menu="mdMenu">
     <button md-menu-item (click)="openDialog()">
-      <md-icon>info_outline</md-icon>
-      <span>Street Descriptions</span>
+      <span>Obstruction Descriptions</span>
     </button>
 </md-menu>
 
-<form-input></form-input>
+<div class="col-xs-12"><form-input></form-input></div>

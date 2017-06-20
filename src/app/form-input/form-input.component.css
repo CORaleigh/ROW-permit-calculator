@@ -1,5 +1,5 @@
 md-card {
-    max-width: 25%;
+    max-width: 30%;
     display: inline-block;
     margin: 15px 0px;
     margin-left: 11%;
@@ -16,4 +16,11 @@ md-select{
 
 md-input-container {
     width: 100%;
+}
+
+@media (max-width: 768px) {
+  md-card {
+    max-width: 100%;
+    margin-left: 0px;
+  }
 }

@@ -22,6 +22,8 @@ export class FormInputComponent implements OnInit {
   //selectedStreetType: StreetType;
   cards: Array<PermitCard> = [];
   cardIndex: number;
+  dateDirectory: any = {};
+  frontageIndex: number = 1;
   selectedObstructions: Array<Obstruction>;ˇ
   private reviewInfo: any;
   private startDate: any;
@@ -107,6 +109,31 @@ export class FormInputComponent implements OnInit {
 
   getNextCard() {
     this.cardIndex += 1;
+  }
+
+  addFrontage() {
+    this.frontageIndex += 1; 
+    this.cards = [];
+    this.cardIndex = -1; 
+    this.addCard();
+    this.dateDirectory = {}; 
+  }
+
+  filterDowntown() {
+    //console.log(this.streetTypes); 
+    for(var i = 0; i < this.streetTypes.length; i++) {
+      console.log(this.streetTypes[i].classifications.length);
+      
+      for(var j = 0; j < this.streetTypes[i].classifications.length; j++) {
+        if(this.streetTypes[i].classifications[j].type != "Minor - Striped" && "Minor - Non-Striped" && "Minor - Full Closure" && "Minor - AUX" && "Minor - Partial" && "Minor - Maintenance" && "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)" && "Misc. - Minor - Non-Specific - Inspections (Per Day)" && "Misc. - Minor - House Move") {
+          //console.log(this.streetTypes[i].classifications[j].type);
+          //console.log(this.streetTypes[i].classifications);
+          //console.log('index', j);
+          
+          this.streetTypes[i].classifications.splice(j, 1); 
+        }
+      }
+    }
   }
 
 

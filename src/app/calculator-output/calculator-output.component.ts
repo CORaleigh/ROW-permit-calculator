@@ -12,7 +12,7 @@ export class CalculatorOutputComponent implements OnInit {
 
   @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
-  dateDirectory: any = {};
+  @Input() dateDirectory: any = {};
   sourceOfTruthReviewFeeArray: any = [];
   dailyFeeTotal: number = 0;
   reviewFeeTotal: number = 0;
@@ -75,7 +75,10 @@ export class CalculatorOutputComponent implements OnInit {
     let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
     
    
-    this.dailyFeeTotal = 0;
+    //this.dailyFeeTotal = 0; ... don't need this anymore since I'm 
+    // blowing away the date directory every time a new frontage is added
+    console.log('here is date directory upon new', this.dateDirectory);
+    console.log('daily fee total before calc', this.dailyFeeTotal);  
     for(var i = 0; i < dateDirectoryKeys.length; i++) { 
       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily); 
       this.dailyFeeTotal += dailySum; 
