@@ -22,6 +22,7 @@ export class FormInputComponent implements OnInit {
   //selectedStreetType: StreetType;
   cards: Array<PermitCard> = [];
   cardIndex: number;
+  checked: boolean = false; 
   dateDirectory: any = {};
   frontageIndex: number = 1;
   selectedObstructions: Array<Obstruction>;ˇ
@@ -119,18 +120,65 @@ export class FormInputComponent implements OnInit {
     this.dateDirectory = {}; 
   }
 
+  toggleDowntown() {
+    if(this.checked) {
+      this.checked = false;
+    } else {
+      this.checked = true; 
+    }
+   
+    
+    if(this.checked) {
+      console.log('hi');
+      
+      this.filterDowntown(); 
+    } else {
+      this.streetTypes = [
+      {id: 1, name: "Full Street Closure", classifications:[
+        {type: "Major - Striped", reviewFee: 814, dailyFee: 81},
+        {type: "Major - Non-Striped", reviewFee: 543, dailyFee: 65},
+        {type: "Minor - Striped", reviewFee: 543, dailyFee: 32},
+        {type: "Minor - Non-Striped", reviewFee: 271, dailyFee: 21}
+      ]},
+      {id: 2, name: "Lane Obstruction", classifications:[
+        {type: "Major - Striped", reviewFee: 407, dailyFee: 32},
+        {type: "Major - Non-Striped", reviewFee: 136, dailyFee: 32},
+        {type: "Minor - Striped", reviewFee: 271, dailyFee: 32},
+        {type: "Minor - Non-Striped", reviewFee: 136, dailyFee: 32},
+      ]},
+      {id: 3, name: "Sidewalk Obstruction", classifications: [
+        {type: "Major - Full Closure", reviewFee: 814, dailyFee: 48},
+        {type: "Major - AUX", reviewFee: 407, dailyFee: 32},
+        {type: "Major - Partial Closure", reviewFee: 407, dailyFee: 48},
+        {type: "Major - Maintenance", reviewFee: 136, dailyFee: 16},
+        {type: "Minor - Full Closure", reviewFee: 271, dailyFee: 32},
+        {type: "Minor - AUX", reviewFee: 136, dailyFee: 32},
+        {type: "Minor - Partial", reviewFee: 136, dailyFee: 16},
+        {type: "Minor - Maintenance", reviewFee: 68, dailyFee: 16},
+      ]},
+      {id: 4, name: "Miscellaneous Right-of-Way Work", classifications: [
+        {type: "Misc. - Major - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
+        {type: "Misc. - Major - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
+        {type: "Misc. - Major - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Misc. - Minor - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 32},
+        {type: "Misc. - Minor - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 16}
+      ]}
+    ];
+    }
+  }
+
   filterDowntown() {
     //console.log(this.streetTypes); 
     for(var i = 0; i < this.streetTypes.length; i++) {
-      console.log(this.streetTypes[i].classifications.length);
+      //console.log(this.streetTypes[i].classifications.length);
       
       for(var j = 0; j < this.streetTypes[i].classifications.length; j++) {
-        if(this.streetTypes[i].classifications[j].type != "Minor - Striped" && "Minor - Non-Striped" && "Minor - Full Closure" && "Minor - AUX" && "Minor - Partial" && "Minor - Maintenance" && "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)" && "Misc. - Minor - Non-Specific - Inspections (Per Day)" && "Misc. - Minor - House Move") {
-          //console.log(this.streetTypes[i].classifications[j].type);
-          //console.log(this.streetTypes[i].classifications);
-          //console.log('index', j);
+        let type = this.streetTypes[i].classifications[j].type; 
+        if(type != "Major - Striped" && type != "Major - Non-Striped" && type != "Major - Full Closure" && type != "Major - AUX" && type != "Major - Partial Closure" && type != "Major - Maintenance" && type != "Misc. - Major - Dumpster/Pod - Inspections (Per Day)" && type != "Misc. - Major - Non-Specific - Inspections (Per Day)" && type != "Misc. - Major - House Move") {
           
           this.streetTypes[i].classifications.splice(j, 1); 
+          j--; 
         }
       }
     }

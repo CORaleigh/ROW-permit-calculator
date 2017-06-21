@@ -8,7 +8,7 @@
     </md-card-header>
   
     <md-card-content class="md-padding" layout="row" layout-wrap>
-      <md-checkbox (change)="filterDowntown()">Downtown Zone</md-checkbox>
+      <md-checkbox id="downtown-checkbox" (change)="toggleDowntown()">Downtown Zone</md-checkbox>
       <form>
         <md-select [(ngModel)]="card.streetName" name="streetType" placeholder="Street Type">
           <md-option *ngFor ="let type of streetTypes" [value]="type">
