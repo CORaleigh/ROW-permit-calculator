@@ -1,0 +1,12 @@
+.mat-dialog-actions {
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+h2, md-dialog-content {
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    text-align: center;
+}
