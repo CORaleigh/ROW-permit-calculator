@@ -33,11 +33,18 @@ export class CalculatorOutputComponent implements OnInit {
 
     if(changes) {
       changes.forEachChangedItem(r => {
+        
         console.log('key', r.key);
-        if ((r.key !="cardIndex" && r.currentValue != "") && r.currentValue != r.previousValue && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
+            
+        if ((r.key !="cardIndex" && r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
           console.log("getting through the conditional", card);
-          this.gatherCalcInfo(card);           
-        }                                                                 
+          if(r.currentValue != r.previousValue){
+            this.dailyFeeTotal = 0; 
+            this.gatherCalcInfo(card);  
+          } else {
+            this.gatherCalcInfo(card); 
+          }          
+        } 
       });
     }
   }
@@ -77,6 +84,10 @@ export class CalculatorOutputComponent implements OnInit {
    
     //this.dailyFeeTotal = 0; ... don't need this anymore since I'm 
     // blowing away the date directory every time a new frontage is added
+
+    if(this.cards.length > 1) {
+        this.dailyFeeTotal = 0; 
+      }
     console.log('here is date directory upon new', this.dateDirectory);
     console.log('daily fee total before calc', this.dailyFeeTotal);  
     for(var i = 0; i < dateDirectoryKeys.length; i++) { 

@@ -24,6 +24,7 @@ export class FormInputComponent implements OnInit {
   cardIndex: number;
   checked: boolean = false; 
   dateDirectory: any = {};
+  dailyFeeTotal: number = 0;
   frontageIndex: number = 1;
   selectedObstructions: Array<Obstruction>;ˇ
   private reviewInfo: any;
@@ -84,7 +85,7 @@ export class FormInputComponent implements OnInit {
     permitcard.startDate = "";
     permitcard.endDate = "";
     this.cards.push(permitcard);
-    this.cardIndex += 1;
+    this.cardIndex += 1; 
   }
 
   removeCard(cards: Array<PermitCard>, index: number) {
@@ -130,6 +131,8 @@ export class FormInputComponent implements OnInit {
    
     
     if(this.checked) {
+      console.log('filtering for major only');
+      
       this.filterDowntown(); 
     } else {
       this.streetTypes = [
