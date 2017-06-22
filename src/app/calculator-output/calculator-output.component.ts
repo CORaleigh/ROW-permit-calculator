@@ -33,7 +33,7 @@ export class CalculatorOutputComponent implements OnInit {
 
     if(changes) {
       changes.forEachChangedItem(r => {
-        console.log(r.key);
+        console.log('key', r.key);
         if ((r.key !="cardIndex" && r.currentValue != "") && r.currentValue != r.previousValue && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
           console.log("getting through the conditional", card);
           this.gatherCalcInfo(card);           

@@ -8,7 +8,7 @@
     </md-card-header>
   
     <md-card-content class="md-padding" layout="row" layout-wrap>
-      <md-checkbox id="downtown-checkbox" (change)="toggleDowntown()">Downtown Zone</md-checkbox>
+      <md-checkbox id="downtown-checkbox" (change)="toggleDowntown()" mdTooltip="Obstructions in the Downtown Zone are considered major obstructions by default">Downtown Zone</md-checkbox>
       <form>
         <md-select [(ngModel)]="card.streetName" name="streetType" placeholder="Street Type">
           <md-option *ngFor ="let type of streetTypes" [value]="type">
@@ -38,7 +38,7 @@
       <button md-icon-button (click)="getNextCard()" *ngIf="cards.length > 1 && cardIndex != cards.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
       <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD</button>
       <button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE</button>
-      <button (click)="addFrontage()" md-button>NEW FRONTAGE</button>
+      <button (click)="addFrontage()" md-button mdTooltip="Add New Frontage">NEW FRONTAGE</button>
       
     </md-card-actions>
   

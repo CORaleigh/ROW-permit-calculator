@@ -113,6 +113,7 @@ export class FormInputComponent implements OnInit {
   }
 
   addFrontage() {
+    this.checked = false; 
     this.frontageIndex += 1; 
     this.cards = [];
     this.cardIndex = -1; 
@@ -129,8 +130,6 @@ export class FormInputComponent implements OnInit {
    
     
     if(this.checked) {
-      console.log('hi');
-      
       this.filterDowntown(); 
     } else {
       this.streetTypes = [
