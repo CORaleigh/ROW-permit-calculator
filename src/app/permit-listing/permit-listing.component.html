@@ -5,12 +5,14 @@
   <!-- Table -->
   <table class="table table-bordered">
     <tr style="font-weight: bold">
+    <div class="panel-heading">Frontage</div>
     <th>Street Closure Type</th>
     <th>Start Date</th>
     <th>End Date</th>
     <th>Duration</th>
   </tr>
   <tr *ngFor="let card of cards">
+    <td>{{this.frontageIndex + 1}}</td>
     <td>{{card.streetName.name}}  {{card.streetClosureType.type}}</td>
     <td>{{card.startDate}}</td>
     <td>{{card.endDate}}</td>

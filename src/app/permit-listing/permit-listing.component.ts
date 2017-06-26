@@ -12,6 +12,7 @@ export class PermitListingComponent implements OnInit, Input, DoCheck {
 
   @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
+  @Input() frontageIndex: number; 
   differ: any;
   permitcard: PermitCard;
   

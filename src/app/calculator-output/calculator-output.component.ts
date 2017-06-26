@@ -12,6 +12,7 @@ export class CalculatorOutputComponent implements OnInit {
 
   @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
+  @Input() frontages: object; 
   @Input() dateDirectory: any = {};
   sourceOfTruthReviewFeeArray: any = [];
   dailyFeeTotal: number = 0;
@@ -70,13 +71,19 @@ export class CalculatorOutputComponent implements OnInit {
       newDate = moment(newDate).format("MM DD YYYY");
 
       // if the date doesn't exist, create it; store daily fee
-      if(this.dateDirectory[newDate]) {
-        this.dateDirectory[newDate].daily.push(dailyFee);
-      } else {
-        this.dateDirectory[newDate] = {
+      // if(this.dateDirectory[newDate]) {
+      //   this.dateDirectory[newDate].daily.push(dailyFee);
+      // } else {
+      //   this.dateDirectory[newDate] = {
+      //   daily: [dailyFee]
+      //   }
+      // }
+       this.dateDirectory = {}; 
+       this.dateDirectory[newDate] = {}; 
+       console.log(this.dateDirectory); 
+       this.dateDirectory[newDate] = {
         daily: [dailyFee]
-        }
-      }
+        }; 
     }
 
     let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
@@ -85,10 +92,10 @@ export class CalculatorOutputComponent implements OnInit {
     //this.dailyFeeTotal = 0; ... don't need this anymore since I'm 
     // blowing away the date directory every time a new frontage is added
 
-    if(this.cards.length > 1) {
-        this.dailyFeeTotal = 0; 
-      }
-    console.log('here is date directory upon new', this.dateDirectory);
+    // if(this.cards.length > 1) {
+    //     this.dailyFeeTotal = 0; 
+    //   }
+    //console.log('here is date directory upon new', this.dateDirectory);
     console.log('daily fee total before calc', this.dailyFeeTotal);  
     for(var i = 0; i < dateDirectoryKeys.length; i++) { 
       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily); 
@@ -99,6 +106,7 @@ export class CalculatorOutputComponent implements OnInit {
     this.reviewFeeTotal = Math.max.apply(null, this.sourceOfTruthReviewFeeArray);
     this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
 
-  }
+     }
+  //}
 
 }

@@ -21,11 +21,12 @@ export class FormInputComponent implements OnInit {
   streetTypes: Array<StreetType>;
   //selectedStreetType: StreetType;
   cards: Array<PermitCard> = [];
+  frontages: object = {}; 
   cardIndex: number;
   checked: boolean = false; 
   dateDirectory: any = {};
   dailyFeeTotal: number = 0;
-  frontageIndex: number = 1;
+  frontageIndex: number = 0;
   selectedObstructions: Array<Obstruction>;ˇ
   private reviewInfo: any;
   private startDate: any;
@@ -80,12 +81,14 @@ export class FormInputComponent implements OnInit {
     let permitcard = new PermitCard();
     permitcard.streetName = ""; 
     permitcard.cardIndex = 0;
-    permitcard.cardIndex = this.cardIndex;
+    //permitcard.cardIndex = this.cardIndex;
     permitcard.streetClosureType = "";
     permitcard.startDate = "";
     permitcard.endDate = "";
     this.cards.push(permitcard);
     this.cardIndex += 1; 
+
+    this.frontages[this.frontageIndex] = this.cards; 
   }
 
   removeCard(cards: Array<PermitCard>, index: number) {
@@ -113,13 +116,21 @@ export class FormInputComponent implements OnInit {
     this.cardIndex += 1;
   }
 
+  getPreviousFrontage() {
+    this.frontageIndex -= 1;
+  }
+
+  getNextFrontage() {
+    this.frontageIndex += 1;
+  }
+
   addFrontage() {
-    this.checked = false; 
-    this.frontageIndex += 1; 
+    this.checked = false;  
     this.cards = [];
     this.cardIndex = -1; 
-    this.addCard();
     this.dateDirectory = {}; 
+    this.frontageIndex += 1;
+    this.addCard(); 
   }
 
   toggleDowntown() {

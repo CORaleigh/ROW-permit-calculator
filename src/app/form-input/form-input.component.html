@@ -3,7 +3,7 @@
   <md-card *ngIf="i === cardIndex" class="example-card">
 
     <md-card-header>
-      <md-card-title><h5>Frontage #{{this.frontageIndex}}</h5></md-card-title>
+      <md-card-title><h5>Frontage #{{this.frontageIndex + 1}}</h5></md-card-title>
       <md-card-title><h3>Obstruction #{{this.cardIndex + 1}}</h3></md-card-title>
     </md-card-header>
   
@@ -34,11 +34,19 @@
   
     <md-card-actions>
 
-      <button md-icon-button (click)="getPreviousCard()" *ngIf="cards.length > 1 && cardIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
-      <button md-icon-button (click)="getNextCard()" *ngIf="cards.length > 1 && cardIndex != cards.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
-      <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD</button>
-      <button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE</button>
-      <button (click)="addFrontage()" md-button mdTooltip="Add New Frontage">NEW FRONTAGE</button>
+      <div style="display:block">
+        <button md-icon-button (click)="getPreviousCard()" *ngIf="cards.length > 1 && cardIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
+        <button md-icon-button (click)="getNextCard()" *ngIf="cards.length > 1 && cardIndex != cards.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
+        <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD CARD</button>
+        <button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE CARD</button>
+      </div>
+
+      <div style="display:block">
+        <button md-icon-button (click)="getPreviousFrontage()" *ngIf="frontageIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
+        <button md-icon-button (click)="getNextFrontage()" *ngIf="frontageIndex > 1 && frontageIndex != cards.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
+        <button (click)="addFrontage()" md-button mdTooltip="Add New Frontage">ADD FRONTAGE</button>
+        <!--<button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE </button>-->
+      </div>
       
     </md-card-actions>
   
@@ -47,7 +55,8 @@
   
 
 </ng-container> 
-<div class="col-xs-12 col-sm-4" style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex" [dateDirectory]="dateDirectory"></calculator-output></div> 
+<div class="col-xs-12 col-sm-4" style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex" [frontages]="frontages" dateDirectory="dateDirectory"></calculator-output></div> 
 
-<div class="col-xs-12" style="clear:both"><permit-listing [cards]="cards" [cardIndex]="cardIndex"></permit-listing></div>
+<div class="col-xs-12" style="clear:both"><permit-listing [cards]="cards" [cardIndex]="cardIndex" [frontageIndex]="frontageIndex"></permit-listing></div>
+
 
