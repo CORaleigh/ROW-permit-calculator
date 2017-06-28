@@ -35,16 +35,15 @@ export class CalculatorOutputComponent implements OnInit {
 
     if(changes) {
       changes.forEachChangedItem(r => {
-        
-        console.log('key', r.key);
-        console.log('prev and curr', r.currentValue, r.previousValue);
             
         if ((r.key !="cardIndex" && r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
-          console.log("getting through the conditional", card);
+
           if(r.currentValue != r.previousValue){
-            //this.dailyFeeTotal = 0; 
+            this.dailyFeeTotal = 0; 
+            this.sourceOfTruthReviewFeeArray = []; 
             this.gatherCalcInfo(card);  
           } else {
+            this.dailyFeeTotal = 0; 
             this.gatherCalcInfo(card); 
           }          
         } 
@@ -61,13 +60,17 @@ export class CalculatorOutputComponent implements OnInit {
     let a: any = moment(endDate);
     let b: any = moment(startDate);
     let diffDays = a.diff(b, 'days');
+    let dateDirectoryKeys: any = [];
 
     //push review fee to the main array as soon as a new card is added
     this.sourceOfTruthReviewFeeArray.push(reviewFee);
 
-    //this.dateDirectory = {}; // need this here to preempt the error 'can't add property to string'
     //create the map of dates as keys given the date range
-    for(var i = 1; i < (diffDays + 2); i++) {
+    for(var i = 1; i < (diffDays + 2); i++) { 
+      // put this if statement in to solve for bug got when editing permit 
+      if(i == 1) {
+        this.dateDirectory = {};
+      } 
       let newDate: any = moment(startDate).add(i, 'days');
       newDate = newDate[Object.keys(newDate)[5]];
       newDate = moment(newDate).format("MM DD YYYY");
@@ -79,13 +82,10 @@ export class CalculatorOutputComponent implements OnInit {
         daily: [dailyFee]
         }
       }
+      
+      dateDirectoryKeys = Object.keys( this.dateDirectory );
     }
 
-    let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
-    
-   
-  
-  
 
     if(this.frontages[this.frontageIndex].length > 1) {
         this.dailyFeeTotal = 0; 
