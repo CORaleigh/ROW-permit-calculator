@@ -19,14 +19,13 @@ import { PermitCard } from '../permit-card';
 export class FormInputComponent implements OnInit {
   duration: number;
   streetTypes: Array<StreetType>;
-  //selectedStreetType: StreetType;
   cards: Array<PermitCard> = [];
-  frontages: object = {}; 
+  frontages: Array<Array<PermitCard>> = [];  
+  frontageIndex: number = 0;
   cardIndex: number;
   checked: boolean = false; 
   dateDirectory: any = {};
   dailyFeeTotal: number = 0;
-  frontageIndex: number = 0;
   selectedObstructions: Array<Obstruction>;ˇ
   private reviewInfo: any;
   private startDate: any;
@@ -81,14 +80,16 @@ export class FormInputComponent implements OnInit {
     let permitcard = new PermitCard();
     permitcard.streetName = ""; 
     permitcard.cardIndex = 0;
-    //permitcard.cardIndex = this.cardIndex;
     permitcard.streetClosureType = "";
     permitcard.startDate = "";
     permitcard.endDate = "";
-    this.cards.push(permitcard);
+    // this.cards.push(permitcard);
     this.cardIndex += 1; 
+    permitcard.cardIndex = this.cardIndex;
+    this.cards.push(permitcard);
 
     this.frontages[this.frontageIndex] = this.cards; 
+    
   }
 
   removeCard(cards: Array<PermitCard>, index: number) {
@@ -117,7 +118,7 @@ export class FormInputComponent implements OnInit {
   }
 
   getPreviousFrontage() {
-    this.frontageIndex -= 1;
+    this.frontageIndex -= 1; 
   }
 
   getNextFrontage() {
@@ -130,6 +131,9 @@ export class FormInputComponent implements OnInit {
     this.cardIndex = -1; 
     this.dateDirectory = {}; 
     this.frontageIndex += 1;
+
+    this.frontages[this.frontageIndex] = this.cards; 
+    
     this.addCard(); 
   }
 
@@ -142,7 +146,6 @@ export class FormInputComponent implements OnInit {
    
     
     if(this.checked) {
-      console.log('filtering for major only');
       
       this.filterDowntown(); 
     } else {

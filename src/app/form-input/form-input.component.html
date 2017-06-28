@@ -1,4 +1,4 @@
-<ng-container *ngFor="let card of cards; let i = index">
+<ng-container *ngFor="let card of this.frontages[this.frontageIndex]; let i = index">
   
   <md-card *ngIf="i === cardIndex" class="example-card">
 
@@ -42,8 +42,8 @@
       </div>
 
       <div style="display:block">
-        <button md-icon-button (click)="getPreviousFrontage()" *ngIf="frontageIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
-        <button md-icon-button (click)="getNextFrontage()" *ngIf="frontageIndex > 1 && frontageIndex != cards.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
+        <button md-icon-button (click)="getPreviousFrontage()" *ngIf="frontages.length > 1 && frontageIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
+        <button md-icon-button (click)="getNextFrontage()" *ngIf="frontages.length > 1 && frontageIndex != frontages.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
         <button (click)="addFrontage()" md-button mdTooltip="Add New Frontage">ADD FRONTAGE</button>
         <!--<button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE </button>-->
       </div>
@@ -55,8 +55,8 @@
   
 
 </ng-container> 
-<div class="col-xs-12 col-sm-4" style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex" [frontages]="frontages" dateDirectory="dateDirectory"></calculator-output></div> 
+<div class="col-xs-12 col-sm-4" style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex" [frontages]="frontages" [frontageIndex]="frontageIndex" [dateDirectory]="dateDirectory"></calculator-output></div> 
 
-<div class="col-xs-12" style="clear:both"><permit-listing [cards]="cards" [cardIndex]="cardIndex" [frontageIndex]="frontageIndex"></permit-listing></div>
+<div class="col-xs-12" style="clear:both"><permit-listing [cardIndex]="cardIndex" [frontages]="frontages" [frontageIndex]="frontageIndex"></permit-listing></div>
 
 

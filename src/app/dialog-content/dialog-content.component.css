@@ -21,3 +21,11 @@ li > span {
     font-style: none;
     list-style: disc outside none;
 }
+
+.mat-dialog-actions {
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}

@@ -10,9 +10,9 @@ import * as moment from 'moment';
 })
 export class PermitListingComponent implements OnInit, Input, DoCheck {
 
-  @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
   @Input() frontageIndex: number; 
+  @Input() frontages: Array<Array<PermitCard>>; 
   differ: any;
   permitcard: PermitCard;
   
@@ -22,10 +22,11 @@ export class PermitListingComponent implements OnInit, Input, DoCheck {
   }
 
   ngOnInit() {
+    
+
   }
 
   ngDoCheck() {
-    let card = this.cards[this.cardIndex];
   }
 
 }

@@ -12,7 +12,8 @@ export class CalculatorOutputComponent implements OnInit {
 
   @Input() cards: Array<PermitCard>;
   @Input() cardIndex: number;
-  @Input() frontages: object; 
+  @Input() frontages: Array<Array<PermitCard>>; 
+  @Input() frontageIndex: number;
   @Input() dateDirectory: any = {};
   sourceOfTruthReviewFeeArray: any = [];
   dailyFeeTotal: number = 0;
@@ -29,18 +30,19 @@ export class CalculatorOutputComponent implements OnInit {
   }
 
   ngDoCheck() {
-    let card = this.cards[this.cards.length - 1];
+    let card = this.frontages[this.frontageIndex][this.cardIndex];
     let changes = this.differ.diff(card);
 
     if(changes) {
       changes.forEachChangedItem(r => {
         
         console.log('key', r.key);
+        console.log('prev and curr', r.currentValue, r.previousValue);
             
         if ((r.key !="cardIndex" && r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
           console.log("getting through the conditional", card);
           if(r.currentValue != r.previousValue){
-            this.dailyFeeTotal = 0; 
+            //this.dailyFeeTotal = 0; 
             this.gatherCalcInfo(card);  
           } else {
             this.gatherCalcInfo(card); 
@@ -63,40 +65,33 @@ export class CalculatorOutputComponent implements OnInit {
     //push review fee to the main array as soon as a new card is added
     this.sourceOfTruthReviewFeeArray.push(reviewFee);
 
-    
+    //this.dateDirectory = {}; // need this here to preempt the error 'can't add property to string'
     //create the map of dates as keys given the date range
     for(var i = 1; i < (diffDays + 2); i++) {
       let newDate: any = moment(startDate).add(i, 'days');
       newDate = newDate[Object.keys(newDate)[5]];
       newDate = moment(newDate).format("MM DD YYYY");
-
-      // if the date doesn't exist, create it; store daily fee
-      // if(this.dateDirectory[newDate]) {
-      //   this.dateDirectory[newDate].daily.push(dailyFee);
-      // } else {
-      //   this.dateDirectory[newDate] = {
-      //   daily: [dailyFee]
-      //   }
-      // }
-       this.dateDirectory = {}; 
-       this.dateDirectory[newDate] = {}; 
-       console.log(this.dateDirectory); 
-       this.dateDirectory[newDate] = {
+        
+      if(this.dateDirectory[newDate]) {
+        this.dateDirectory[newDate].daily.push(dailyFee);
+      } else {
+        this.dateDirectory[newDate] = {
         daily: [dailyFee]
-        }; 
+        }
+      }
     }
 
     let dateDirectoryKeys: any = Object.keys( this.dateDirectory );
     
    
-    //this.dailyFeeTotal = 0; ... don't need this anymore since I'm 
-    // blowing away the date directory every time a new frontage is added
+  
+  
 
-    // if(this.cards.length > 1) {
-    //     this.dailyFeeTotal = 0; 
-    //   }
-    //console.log('here is date directory upon new', this.dateDirectory);
-    console.log('daily fee total before calc', this.dailyFeeTotal);  
+    if(this.frontages[this.frontageIndex].length > 1) {
+        this.dailyFeeTotal = 0; 
+      } 
+
+    
     for(var i = 0; i < dateDirectoryKeys.length; i++) { 
       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily); 
       this.dailyFeeTotal += dailySum; 
@@ -106,7 +101,6 @@ export class CalculatorOutputComponent implements OnInit {
     this.reviewFeeTotal = Math.max.apply(null, this.sourceOfTruthReviewFeeArray);
     this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
 
-     }
-  //}
+  }
 
 }
