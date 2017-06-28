@@ -16,6 +16,7 @@ export class CalculatorOutputComponent implements OnInit {
   @Input() frontageIndex: number;
   @Input() dateDirectory: any = {};
   sourceOfTruthReviewFeeArray: any = [];
+  lengthOfArrayOfPermitCards: number = 1; 
   dailyFeeTotal: number = 0;
   reviewFeeTotal: number = 0;
   totalTotal: number = 0;
@@ -39,13 +40,27 @@ export class CalculatorOutputComponent implements OnInit {
         if ((r.key !="cardIndex" && r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
 
           if(r.currentValue != r.previousValue){
-            this.dailyFeeTotal = 0; 
-            this.sourceOfTruthReviewFeeArray = []; 
-            this.gatherCalcInfo(card);  
-          } else {
-            this.dailyFeeTotal = 0; 
-            this.gatherCalcInfo(card); 
-          }          
+             
+            if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && this.frontages[this.frontageIndex].length > 1) {
+              console.log('length of array', this.frontages[this.frontageIndex].length);
+              
+              console.log('variables are same length and greater than one ');
+              
+              // this.dateDirectory = {};
+              // this.dailyFeeTotal = 0; 
+              this.gatherCalcInfo(card);
+            } else if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && this.frontages[this.frontageIndex].length == 1) {
+              console.log('variables equal and length one');
+              
+              // this.dateDirectory = 0; 
+              // this.dateDirectory = {}
+              this.gatherCalcInfo(card); 
+            } else {
+              console.log('normal call of function');
+              
+              this.gatherCalcInfo(card);
+            } 
+          }         
         } 
       });
     }
@@ -68,9 +83,16 @@ export class CalculatorOutputComponent implements OnInit {
     //create the map of dates as keys given the date range
     for(var i = 1; i < (diffDays + 2); i++) { 
       // put this if statement in to solve for bug got when editing permit 
-      if(i == 1) {
+      // if(i == 1) {
+      //   this.dateDirectory = {};
+      // } 
+      //new if statement to solve editing bug
+      if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && i == 1){
+        console.log('conditional to clear out date dir within for loop firing');
+ 
         this.dateDirectory = {};
-      } 
+      }
+      
       let newDate: any = moment(startDate).add(i, 'days');
       newDate = newDate[Object.keys(newDate)[5]];
       newDate = moment(newDate).format("MM DD YYYY");
@@ -84,6 +106,8 @@ export class CalculatorOutputComponent implements OnInit {
       }
       
       dateDirectoryKeys = Object.keys( this.dateDirectory );
+      console.log(i, dateDirectoryKeys);
+      
     }
 
 
@@ -91,8 +115,13 @@ export class CalculatorOutputComponent implements OnInit {
         this.dailyFeeTotal = 0; 
       } 
 
-    
-    for(var i = 0; i < dateDirectoryKeys.length; i++) { 
+    if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length ) {
+      console.log('daily fee set to zero because two variables length equal');
+      
+       this.dailyFeeTotal = 0; 
+      } 
+
+    for(var i = 0; i < dateDirectoryKeys.length; i++) {  
       let dailySum: number = Math.max.apply(null, this.dateDirectory[dateDirectoryKeys[i]].daily); 
       this.dailyFeeTotal += dailySum; 
     }
@@ -100,6 +129,8 @@ export class CalculatorOutputComponent implements OnInit {
     // Just want highest review fee for one plan submission
     this.reviewFeeTotal = Math.max.apply(null, this.sourceOfTruthReviewFeeArray);
     this.totalTotal = this.dailyFeeTotal + this.reviewFeeTotal;
+
+    this.lengthOfArrayOfPermitCards = this.frontages[this.frontageIndex].length; 
 
   }
 
