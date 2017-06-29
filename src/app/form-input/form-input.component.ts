@@ -25,6 +25,7 @@ export class FormInputComponent implements OnInit {
   cardIndex: number;
   checked: boolean = false; 
   dateDirectory: any = {};
+  flipCardToggle: boolean = false; 
   dailyFeeTotal: number = 0;
   selectedObstructions: Array<Obstruction>;ˇ
   private reviewInfo: any;
@@ -76,6 +77,10 @@ export class FormInputComponent implements OnInit {
     
   }
 
+  onClose(e) {
+    this.flipCardToggle = e; 
+  }
+
   addCard() {
     let permitcard = new PermitCard();
     permitcard.streetName = ""; 
@@ -89,6 +94,8 @@ export class FormInputComponent implements OnInit {
     this.cards.push(permitcard);
 
     this.frontages[this.frontageIndex] = this.cards; 
+    this.flipCardToggle = false; 
+    this.cardIndex = this.frontages[this.frontageIndex].length - 1; 
     
   }
 
@@ -111,18 +118,22 @@ export class FormInputComponent implements OnInit {
 
   getPreviousCard() {
     this.cardIndex -= 1;
+    this.flipCardToggle = true; 
   }
 
   getNextCard() {
     this.cardIndex += 1;
+    this.flipCardToggle = true;
   }
 
   getPreviousFrontage() {
     this.frontageIndex -= 1; 
+    this.flipCardToggle = true; 
   }
 
   getNextFrontage() {
     this.frontageIndex += 1;
+    this.flipCardToggle = true;
   }
 
   addFrontage() {

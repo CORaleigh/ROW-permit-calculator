@@ -35,10 +35,10 @@
     <md-card-actions>
 
       <div style="display:block">
-        <button md-icon-button (click)="getPreviousCard()" *ngIf="cards.length > 1 && cardIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
-        <button md-icon-button (click)="getNextCard()" *ngIf="cards.length > 1 && cardIndex != cards.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
-        <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD CARD</button>
-        <button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE CARD</button>
+        <button md-icon-button (click)="getPreviousCard()" *ngIf="this.frontages[this.frontageIndex].length > 1 && this.cardIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
+        <button md-icon-button (click)="getNextCard()" *ngIf="this.frontages[this.frontageIndex].length > 1 && this.cardIndex != this.frontages[this.frontageIndex].length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
+        <button (click)="addCard()" md-button mdTooltip="Add Permit Type">ADD OBSTRUCTION</button>
+        <button md-button (click)="removeCard(cards, i)" *ngIf="this.frontages[this.frontageIndex].length > 1" mdTooltip="Remove This Permit">REMOVE</button>
       </div>
 
       <div style="display:block">
@@ -55,8 +55,7 @@
   
 
 </ng-container> 
-<div class="col-xs-12 col-sm-4" style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex" [frontages]="frontages" [frontageIndex]="frontageIndex" [dateDirectory]="dateDirectory"></calculator-output></div> 
+<div class="col-xs-12 col-sm-4" style="float:right"><calculator-output [cards]="cards" [cardIndex]="cardIndex" [frontages]="frontages" [frontageIndex]="frontageIndex" [dateDirectory]="dateDirectory" [flipCardToggle]="flipCardToggle"></calculator-output></div> 
 
-<div class="col-xs-12" style="clear:both"><permit-listing [cardIndex]="cardIndex" [frontages]="frontages" [frontageIndex]="frontageIndex"></permit-listing></div>
-
+<div class="col-xs-12" style="clear:both"><permit-listing [cardIndex]="cardIndex" [frontages]="frontages" [frontageIndex]="frontageIndex" (close)="onClose($event)"></permit-listing></div>
 
