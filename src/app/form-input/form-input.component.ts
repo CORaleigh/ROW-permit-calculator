@@ -140,7 +140,7 @@ export class FormInputComponent implements OnInit {
     this.checked = false;  
     this.cards = [];
     this.cardIndex = -1; 
-    this.dateDirectory = {}; 
+    //this.dateDirectory = {}; 
     this.frontageIndex += 1;
 
     this.frontages[this.frontageIndex] = this.cards; 

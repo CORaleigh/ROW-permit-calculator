@@ -75,7 +75,7 @@ export class CalculatorOutputComponent implements OnInit {
              
               let index = previousDateinDir.daily.map((e) => { return e.index;}).indexOf(this.cardIndex); 
               previousDateinDir.daily.splice(index, 1);
-                  if( previousDateinDir.daily.length == 0) {
+                  if( previousDateinDir.daily.length == 0) { 
                   delete this.dateDirectory[previous];  
                    }              
               // if(index > -1) {
@@ -158,20 +158,24 @@ export class CalculatorOutputComponent implements OnInit {
         
       if(this.dateDirectory[newDate]) {
         let object = {index: this.cardIndex,  fee: dailyFee}; 
-        let matches = this.dateDirectory[newDate].daily.filter((fee) => fee.index == this.cardIndex);
-        if(matches.length < 1) {
-          this.dateDirectory[newDate].daily.push(object);
+        let matches = this.dateDirectory[newDate].daily[this.frontageIndex].filter((fee) => fee.index == this.cardIndex);
+        console.log('matches length'); 
+        if(matches.length < 1 && this.dateDirectory[newDate].daily[this.frontageIndex]) {
+          this.dateDirectory[newDate].daily[this.frontageIndex].push(object);
         } 
       } else {
+        console.log('creating new nums'); 
         this.dateDirectory[newDate] = {
-        daily: [{index: this.cardIndex,  fee: dailyFee}]
+        daily: {
+          [this.frontageIndex]: {index: this.cardIndex,  fee: dailyFee}
+      }
         }
       }
       
       dateDirectoryKeys = Object.keys( this.dateDirectory );
-      console.log(this.dateDirectory);
+      console.log('this is the date directory', this.dateDirectory);
       
-      console.log(i, dateDirectoryKeys);
+      //console.log(i, dateDirectoryKeys);
       
     }
 
@@ -191,14 +195,19 @@ export class CalculatorOutputComponent implements OnInit {
        this.dailyFeeTotal = 0; 
       } 
 
-      this.dailyFeeTotal = 0; 
+    this.dailyFeeTotal = 0; 
     
     let dailyFeesArray: any = []; 
     for(var i = 0; i < dateDirectoryKeys.length; i++) {
+      console.log('first',this.dateDirectory[dateDirectoryKeys[i]]); 
       dailyFeesArray = []; 
-      for(var j = 0; j < this.dateDirectory[dateDirectoryKeys[i]].daily.length; j++) {
-        dailyFeesArray.push(this.dateDirectory[dateDirectoryKeys[i]].daily[j].fee); 
+      let frontageKeys = Object.keys(this.dateDirectory[dateDirectoryKeys[i]].daily).length
+      for(var j = 0; j < frontageKeys; j++) {
+        dailyFeesArray.push(this.dateDirectory[dateDirectoryKeys[i]].daily[this.frontageIndex].fee); 
+        console.log(); 
       } 
+      console.log(dailyFeesArray);
+      
       let dailySum: number = Math.max.apply(null, dailyFeesArray); 
       this.dailyFeeTotal += dailySum; 
     }
