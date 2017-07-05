@@ -141,6 +141,7 @@ export class FormInputComponent implements OnInit {
     this.cards = [];
     this.cardIndex = -1; 
     //this.dateDirectory = {}; 
+    this.frontageIndex = this.frontages.length -1; //correcting for bug
     this.frontageIndex += 1;
 
     this.frontages[this.frontageIndex] = this.cards; 
