@@ -27,13 +27,13 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-#COR-Specific AWS Deployment
+# COR-Specific AWS Deployment
 
-###Pre-AWS
+### Pre-AWS
 
 - ng build --prod --bh /name-of-thing (this name will need to correspond with the future URL)
 
-- ***In project folder***: zip -r dist.zip dist
+- *** In project folder ***: zip -r dist.zip dist
 
 - scp -i *full path of pem file* AND *full path of dist file* ubuntu@54.148.0.119:/tmp  
 Example: scp -i ~/Desktop/code/sysadmin/bc-prod.pem ~/Desktop/code/row-permit-calculator/dist.zip ubuntu@54.148.0.119:/tmp
@@ -41,22 +41,22 @@ Example: scp -i ~/Desktop/code/sysadmin/bc-prod.pem ~/Desktop/code/row-permit-ca
 - ssh -i *full path of pem file* ubuntu@54.148.0.119:/tmp   
 Example: ssh -i ~/Desktop/code/sysadmin/bc-prod.pem ubuntu@54.148.0.119:/tmp
 
-###Upon SSH into Server
+### Upon SSH into Server
 
 - cd /tmp
 
 - -ls to make sure old dist file exists  
 
-***Before unzipping zipped dist, get rid of old one:***
+*** Before unzipping zipped dist, get rid of old one: ***
 
 - rm -rf dist
 
-***Then unzip zipped dist***
+*** Then unzip zipped dist ***
 
 - unzip dist.zip
 
-***Move to URL, using the path that corresponds with the build's name-of-thing***
+*** Move to URL, using the path that corresponds with the build's name-of-thing ***
 
 - sudo cp -R * /var/www/html/row-permit-calculator
 
-######Hooray!
+###### Hooray!
