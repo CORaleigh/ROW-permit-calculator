@@ -74,9 +74,9 @@ export class CalculatorOutputComponent implements OnInit {
             let previousDateinDir = this.dateDirectory[previous]; 
             console.log('previous date in dir', previousDateinDir);
              
-              let index = previousDateinDir.daily.map((e) => { return e.index;}).indexOf(this.cardIndex); 
-              previousDateinDir.daily.splice(index, 1);
-                  if( previousDateinDir.daily.length == 0) { 
+              let index = previousDateinDir.daily[this.frontageIndex].map((e) => { return e.index;}).indexOf(this.cardIndex); 
+              previousDateinDir.daily[this.frontageIndex].splice(index, 1);
+                  if( previousDateinDir.daily[this.frontageIndex].length == 0) { 
                   delete this.dateDirectory[previous];  
                    }             
             }
@@ -154,14 +154,17 @@ export class CalculatorOutputComponent implements OnInit {
       console.log('first',this.dateDirectory[dateDirectoryKeys[i]]); 
       dailyFeesArray = []; 
       for(var j = 0; j <= this.frontageIndex ; j++) {
-        for(var k = 0; k < this.dateDirectory[dateDirectoryKeys[i]].daily[j].length; k++) {
+        var counter: number = 0;
+        if(this.dateDirectory[dateDirectoryKeys[i]].daily[j]) {
+          for(var k = 0; k < this.dateDirectory[dateDirectoryKeys[i]].daily[j].length; k++) {
            console.log('thing trying to pushed', this.dateDirectory[dateDirectoryKeys[i]].daily[j]);
-           let counter: number = 0; 
+            
            if(this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee > counter) {
              counter = this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee; 
            } 
            dailyFeesArray.push(counter);
-        }  
+          }  
+        }
       } 
       console.log(dailyFeesArray);
       
