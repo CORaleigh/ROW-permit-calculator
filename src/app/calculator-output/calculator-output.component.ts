@@ -157,12 +157,13 @@ export class CalculatorOutputComponent implements OnInit {
         var counter: number = 0;
         if(this.dateDirectory[dateDirectoryKeys[i]].daily[j]) {
           for(var k = 0; k < this.dateDirectory[dateDirectoryKeys[i]].daily[j].length; k++) {
+           console.log('date dir with values', this.dateDirectory); 
            console.log('thing trying to pushed', this.dateDirectory[dateDirectoryKeys[i]].daily[j]);
             
            if(this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee > counter) {
              counter = this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee; 
+             dailyFeesArray.push(counter);
            } 
-           dailyFeesArray.push(counter);
           }  
         }
       } 
@@ -170,6 +171,7 @@ export class CalculatorOutputComponent implements OnInit {
       
       let dailySum: number = dailyFeesArray.reduce((prev, curr) => prev + curr);  
       this.dailyFeeTotal += dailySum; 
+      console.log(this.dailyFeeTotal); 
     }
 
     // Just want highest review fee for one plan submission
