@@ -100,7 +100,7 @@ export class FormInputComponent implements OnInit {
   }
 
   removeCard(cards: Array<PermitCard>, index: number) {
-    let card = cards[this.cardIndex];
+    let card = this.frontages[this.frontageIndex][this.cardIndex];
     if (this.cardIndex === 0) {
       cards.shift();
       this.cardIndex += 1;

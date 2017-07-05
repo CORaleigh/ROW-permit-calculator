@@ -15,10 +15,11 @@
   <tr *ngFor="let card of this.frontages[this.frontageIndex]">
     <td>{{this.frontageIndex + 1}}</td>
     <td>{{card.streetName.name}}  {{card.streetClosureType.type}}</td>
-    <td>{{card.startDate}}</td>
-    <td>{{card.endDate}}</td>
+    <td>{{card.startDate | date:'fullDate'}}</td>
+    <td>{{card.endDate | date:'fullDate'}}</td>
     <td>
-      <p md-line *ngIf="card.calcDuration() > 0">{{card.calcDuration()}}</p>
+      <p md-line *ngIf="card.calcDuration() > 1">{{card.calcDuration()}} days</p>
+      <p md-line *ngIf="card.calcDuration() == 1">{{card.calcDuration()}} day</p>
     </td>
   </tr>
 

@@ -37,6 +37,7 @@ export class CalculatorOutputComponent implements OnInit {
     
 
     let card = this.frontages[this.frontageIndex][this.cardIndex];
+
       
     this.cardChangesLaunchCalculation(card); 
     
@@ -73,21 +74,11 @@ export class CalculatorOutputComponent implements OnInit {
             let previousDateinDir = this.dateDirectory[previous]; 
             console.log('previous date in dir', previousDateinDir);
              
-              let index = previousDateinDir.daily.map((e) => { return e.index;}).indexOf(this.cardIndex); 
-              previousDateinDir.daily.splice(index, 1);
-                  if( previousDateinDir.daily.length == 0) {
+              let index = previousDateinDir.daily[this.frontageIndex].map((e) => { return e.index;}).indexOf(this.cardIndex); 
+              previousDateinDir.daily[this.frontageIndex].splice(index, 1);
+                  if( previousDateinDir.daily[this.frontageIndex].length == 0) { 
                   delete this.dateDirectory[previous];  
-                   }              
-              // if(index > -1) {
-              //   for(var j = 0; j < previousDateinDir.daily.length; j++) {
-              //   if(previousDateinDir.daily[j].index == this.cardIndex) {
-              //     previousDateinDir.daily.splice(index, 1); 
-              //     if( previousDateinDir.daily.length == 0) {
-              //     delete this.dateDirectory[previous];  
-              //      }
-              //     }
-              //   }
-              // }
+                   }             
             }
           }
         }
@@ -96,28 +87,7 @@ export class CalculatorOutputComponent implements OnInit {
           console.log(r.key);
 
           if(r.currentValue != r.previousValue){
-            
-            
-             
-            if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && this.frontages[this.frontageIndex].length > 1) {
-              console.log('length of array', this.frontages[this.frontageIndex].length);
-              
-              console.log('variables are same length and greater than one ');
-              
-              // this.dateDirectory = {};
-              // this.dailyFeeTotal = 0; 
-              this.gatherCalcInfo(card);
-            } else if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && this.frontages[this.frontageIndex].length == 1) {
-              console.log('variables equal and length one');
-              
-               //this.dailyFeeTotal = 0; 
-               //this.dateDirectory = {}
-              this.gatherCalcInfo(card); 
-            } else {
-              console.log('normal call of function');
-              
-              this.gatherCalcInfo(card);
-            } 
+            this.gatherCalcInfo(card);
           }         
         } 
       });
@@ -140,66 +110,65 @@ export class CalculatorOutputComponent implements OnInit {
 
     //create the map of dates as keys given the date range
     for(var i = 1; i < (diffDays + 2); i++) { 
-      // put this if statement in to solve for bug got when editing permit 
-      // if(i == 1) {
-      //   this.dateDirectory = {};
-      // } 
-      //new if statement to solve editing bug
-      if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && i == 1){
-        console.log('conditional to clear out date dir within for loop firing');
- 
-        //this.dateDirectory = {};
-        //this.dailyFeeTotal = 0; 
-      }
       
       let newDate: any = moment(startDate).add(i, 'days');
       newDate = newDate[Object.keys(newDate)[5]];
       newDate = moment(newDate).format("YYYY-MM-DD");
+      let matches: any; 
         
       if(this.dateDirectory[newDate]) {
-        let object = {index: this.cardIndex,  fee: dailyFee}; 
-        let matches = this.dateDirectory[newDate].daily.filter((fee) => fee.index == this.cardIndex);
-        if(matches.length < 1) {
-          this.dateDirectory[newDate].daily.push(object);
-        } 
+        if(this.dateDirectory[newDate].daily[this.frontageIndex]) {
+          let object = {index: this.cardIndex,  fee: dailyFee}; 
+          matches = this.dateDirectory[newDate].daily[this.frontageIndex].filter((fee) => fee.index == this.cardIndex);
+        } else {
+          matches = "   "; 
+        }
+        let object = {index: this.cardIndex,  fee: dailyFee};  
+        if(matches.length < 1 && this.dateDirectory[newDate].daily[this.frontageIndex]) {
+          console.log(this.dateDirectory[newDate].daily[this.frontageIndex]);
+          
+          this.dateDirectory[newDate].daily[this.frontageIndex].push(object);
+        } else {
+          this.dateDirectory[newDate].daily[this.frontageIndex] = [{index: this.cardIndex,  fee: dailyFee}]; 
+        }
       } else {
+        console.log('creating new nums'); 
         this.dateDirectory[newDate] = {
-        daily: [{index: this.cardIndex,  fee: dailyFee}]
+        daily: {
+          [this.frontageIndex]: [{index: this.cardIndex,  fee: dailyFee}]
+      }
         }
       }
       
       dateDirectoryKeys = Object.keys( this.dateDirectory );
-      console.log(this.dateDirectory);
+      console.log('this is the date directory', this.dateDirectory);
       
-      console.log(i, dateDirectoryKeys);
       
     }
 
 
-    if(this.frontages[this.frontageIndex].length > 1) {
-      console.log('daily fee total cleared because more than one frontage');
-      
-      this.dailyFeeTotal = 0; 
-
-      } 
-    
-    //need length to be greater than 1 in addition to the length being same? need some other conditional
-    // this is what enables editing 
-    if(this.lengthOfArrayOfPermitCards == this.frontages[this.frontageIndex].length && this.frontages[this.frontageIndex].length > 1) {
-      console.log('daily fee set to zero because two variables length equal');
-      
-       this.dailyFeeTotal = 0; 
-      } 
-
-      this.dailyFeeTotal = 0; 
+    this.dailyFeeTotal = 0; 
     
     let dailyFeesArray: any = []; 
     for(var i = 0; i < dateDirectoryKeys.length; i++) {
+      console.log('first',this.dateDirectory[dateDirectoryKeys[i]]); 
       dailyFeesArray = []; 
-      for(var j = 0; j < this.dateDirectory[dateDirectoryKeys[i]].daily.length; j++) {
-        dailyFeesArray.push(this.dateDirectory[dateDirectoryKeys[i]].daily[j].fee); 
+      for(var j = 0; j <= this.frontageIndex ; j++) {
+        var counter: number = 0;
+        if(this.dateDirectory[dateDirectoryKeys[i]].daily[j]) {
+          for(var k = 0; k < this.dateDirectory[dateDirectoryKeys[i]].daily[j].length; k++) {
+           console.log('thing trying to pushed', this.dateDirectory[dateDirectoryKeys[i]].daily[j]);
+            
+           if(this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee > counter) {
+             counter = this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee; 
+           } 
+           dailyFeesArray.push(counter);
+          }  
+        }
       } 
-      let dailySum: number = Math.max.apply(null, dailyFeesArray); 
+      console.log(dailyFeesArray);
+      
+      let dailySum: number = dailyFeesArray.reduce((prev, curr) => prev + curr);  
       this.dailyFeeTotal += dailySum; 
     }
 
