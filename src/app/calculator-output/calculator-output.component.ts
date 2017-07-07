@@ -49,7 +49,7 @@ export class CalculatorOutputComponent implements OnInit {
           changes.forEachChangedItem(r => {
 
         if(r.key == "cardIndex") {
-          console.log('current card index', this.currentCardIndex, 'card index', this.cardIndex);
+          //console.log('current card index', this.currentCardIndex, 'card index', this.cardIndex);
           
           this.currentCardIndex = this.cardIndex; 
         }
@@ -72,7 +72,7 @@ export class CalculatorOutputComponent implements OnInit {
                 previous = moment(r.previousValue).add(i, 'days').format('YYYY-MM-DD');  
               }
             let previousDateinDir = this.dateDirectory[previous]; 
-            console.log('previous date in dir', previousDateinDir);
+            //console.log('previous date in dir', previousDateinDir);
              
               let index = previousDateinDir.daily[this.frontageIndex].map((e) => { return e.index;}).indexOf(this.cardIndex); 
               previousDateinDir.daily[this.frontageIndex].splice(index, 1);
@@ -84,7 +84,7 @@ export class CalculatorOutputComponent implements OnInit {
         }
             
         if (r.key !="cardIndex" && ( r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
-          console.log(r.key);
+          //console.log(r.key);
 
           if(r.currentValue != r.previousValue){
             this.gatherCalcInfo(card);
@@ -125,14 +125,14 @@ export class CalculatorOutputComponent implements OnInit {
         }
         let object = {index: this.cardIndex,  fee: dailyFee};  
         if(matches.length < 1 && this.dateDirectory[newDate].daily[this.frontageIndex]) {
-          console.log(this.dateDirectory[newDate].daily[this.frontageIndex]);
+          //console.log(this.dateDirectory[newDate].daily[this.frontageIndex]);
           
           this.dateDirectory[newDate].daily[this.frontageIndex].push(object);
         } else {
           this.dateDirectory[newDate].daily[this.frontageIndex] = [{index: this.cardIndex,  fee: dailyFee}]; 
         }
       } else {
-        console.log('creating new nums'); 
+        //console.log('creating new nums'); 
         this.dateDirectory[newDate] = {
         daily: {
           [this.frontageIndex]: [{index: this.cardIndex,  fee: dailyFee}]
@@ -141,7 +141,7 @@ export class CalculatorOutputComponent implements OnInit {
       }
       
       dateDirectoryKeys = Object.keys( this.dateDirectory );
-      console.log('this is the date directory', this.dateDirectory);
+      //console.log('this is the date directory', this.dateDirectory);
       
       
     }
@@ -151,14 +151,14 @@ export class CalculatorOutputComponent implements OnInit {
     
     let dailyFeesArray: any = []; 
     for(var i = 0; i < dateDirectoryKeys.length; i++) {
-      console.log('first',this.dateDirectory[dateDirectoryKeys[i]]); 
+      //console.log('first',this.dateDirectory[dateDirectoryKeys[i]]); 
       dailyFeesArray = []; 
       for(var j = 0; j <= this.frontageIndex ; j++) {
         var counter: number = 0;
         if(this.dateDirectory[dateDirectoryKeys[i]].daily[j]) {
           for(var k = 0; k < this.dateDirectory[dateDirectoryKeys[i]].daily[j].length; k++) {
-           console.log('date dir with values', this.dateDirectory); 
-           console.log('thing trying to pushed', this.dateDirectory[dateDirectoryKeys[i]].daily[j]);
+           //console.log('date dir with values', this.dateDirectory); 
+           //console.log('thing trying to pushed', this.dateDirectory[dateDirectoryKeys[i]].daily[j]);
             
            if(this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee > counter) {
              counter = this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee; 
@@ -167,11 +167,11 @@ export class CalculatorOutputComponent implements OnInit {
           }  
         }
       } 
-      console.log(dailyFeesArray);
+      //console.log(dailyFeesArray);
       
       let dailySum: number = dailyFeesArray.reduce((prev, curr) => prev + curr);  
       this.dailyFeeTotal += dailySum; 
-      console.log(this.dailyFeeTotal); 
+      //console.log(this.dailyFeeTotal); 
     }
 
     // Just want highest review fee for one plan submission
