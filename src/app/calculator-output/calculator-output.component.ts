@@ -172,7 +172,7 @@ export class CalculatorOutputComponent implements OnInit {
         dailyFeesArray = [0]; //correcting for potential error with the misc. house moves that have no daily fee
       }
       
-      console.log('investigating matt error', dailyFeesArray);
+      //console.log('investigating matt error', dailyFeesArray);
       let dailySum: number = dailyFeesArray.reduce((prev, curr) => prev + curr);  
       this.dailyFeeTotal += dailySum; 
       //console.log(this.dailyFeeTotal); 
