@@ -59,6 +59,6 @@ Example: ssh -i ~/Desktop/code/sysadmin/bc-prod.pem ubuntu@54.148.0.119
 ***Move to URL, using the path that corresponds with the build's name-of-thing***
 
 - sudo cp -R * /var/www/html/row-permit-calculator/
-* Need trailing slahs on this too! 
+* Need trailing slash on this too! 
 
 ###### Hooray!
