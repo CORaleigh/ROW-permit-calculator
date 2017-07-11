@@ -56,7 +56,7 @@ export class FormInputComponent implements OnInit {
       {id: 3, name: "Sidewalk Obstruction", classifications: [
         {type: "Major - Full Closure", reviewFee: 814, dailyFee: 48},
         {type: "Major - AUX", reviewFee: 407, dailyFee: 32},
-        {type: "Major - Partial Closure", reviewFee: 407, dailyFee: 48},
+        {type: "Major - Partial Closure", reviewFee: 407, dailyFee: 16},
         {type: "Major - Maintenance", reviewFee: 136, dailyFee: 16},
         {type: "Minor - Full Closure", reviewFee: 271, dailyFee: 32},
         {type: "Minor - AUX", reviewFee: 136, dailyFee: 32},
@@ -64,12 +64,12 @@ export class FormInputComponent implements OnInit {
         {type: "Minor - Maintenance", reviewFee: 68, dailyFee: 16},
       ]},
       {id: 4, name: "Miscellaneous Right-of-Way Work", classifications: [
-        {type: "Misc. - Major - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
-        {type: "Misc. - Major - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
-        {type: "Misc. - Major - House Move", reviewFee: 136, dailyFee: 0},
-        {type: "Misc. - Minor - House Move", reviewFee: 136, dailyFee: 0},
-        {type: "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 32},
-        {type: "Misc. - Minor - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 16}
+        {type: "Major - Dumpster/Pod", reviewFee: 0, dailyFee: 48},
+        {type: "Major - Non-Specific", reviewFee: 0, dailyFee: 48},
+        {type: "Major - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Minor - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Minor - Dumpster/Pod", reviewFee: 0, dailyFee: 32},
+        {type: "Minor - Non-Specific", reviewFee: 0, dailyFee: 16}
       ]}
     ];
      //this.selectedStreetType = new StreetType(0, "", []);
@@ -185,12 +185,12 @@ export class FormInputComponent implements OnInit {
         {type: "Minor - Maintenance", reviewFee: 68, dailyFee: 16},
       ]},
       {id: 4, name: "Miscellaneous Right-of-Way Work", classifications: [
-        {type: "Misc. - Major - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
-        {type: "Misc. - Major - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 48},
-        {type: "Misc. - Major - House Move", reviewFee: 136, dailyFee: 0},
-        {type: "Misc. - Minor - House Move", reviewFee: 136, dailyFee: 0},
-        {type: "Misc. - Minor - Dumpster/Pod - Inspections (Per Day)", reviewFee: 0, dailyFee: 32},
-        {type: "Misc. - Minor - Non-Specific - Inspections (Per Day)", reviewFee: 0, dailyFee: 16}
+        {type: "Major - Dumpster/Pod", reviewFee: 0, dailyFee: 48},
+        {type: "Major - Non-Specific", reviewFee: 0, dailyFee: 48},
+        {type: "Major - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Minor - House Move", reviewFee: 136, dailyFee: 0},
+        {type: "Minor - Dumpster/Pod", reviewFee: 0, dailyFee: 32},
+        {type: "Minor - Non-Specific", reviewFee: 0, dailyFee: 16}
       ]}
     ];
     }
@@ -203,7 +203,7 @@ export class FormInputComponent implements OnInit {
       
       for(var j = 0; j < this.streetTypes[i].classifications.length; j++) {
         let type = this.streetTypes[i].classifications[j].type; 
-        if(type != "Major - Striped" && type != "Major - Non-Striped" && type != "Major - Full Closure" && type != "Major - AUX" && type != "Major - Partial Closure" && type != "Major - Maintenance" && type != "Misc. - Major - Dumpster/Pod - Inspections (Per Day)" && type != "Misc. - Major - Non-Specific - Inspections (Per Day)" && type != "Misc. - Major - House Move") {
+        if(type != "Major - Striped" && type != "Major - Non-Striped" && type != "Major - Full Closure" && type != "Major - AUX" && type != "Major - Partial Closure" && type != "Major - Maintenance" && type != "Major - Dumpster/Pod" && type != "Major - Non-Specific" && type != "Major - House Move") {
           
           this.streetTypes[i].classifications.splice(j, 1); 
           j--; 
