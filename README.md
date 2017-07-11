@@ -32,14 +32,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Pre-AWS
 
 - ng build --prod --bh /name-of-thing (this name will need to correspond with the future URL)
+* Need trailing slash on this! Ex: ng build --prod --bh /row-permit-calculator/
 
 - ***In project folder***: zip -r dist.zip dist
 
 - scp -i *full path of pem file* AND *full path of dist file* ubuntu@54.148.0.119:/tmp  
 Example: scp -i ~/Desktop/code/sysadmin/bc-prod.pem ~/Desktop/code/row-permit-calculator/dist.zip ubuntu@54.148.0.119:/tmp
 
-- ssh -i *full path of pem file* ubuntu@54.148.0.119:/tmp   
-Example: ssh -i ~/Desktop/code/sysadmin/bc-prod.pem ubuntu@54.148.0.119:/tmp
+- ssh -i *full path of pem file* ubuntu@54.148.0.119   
+Example: ssh -i ~/Desktop/code/sysadmin/bc-prod.pem ubuntu@54.148.0.119
 
 ### Upon SSH into Server
 
@@ -57,6 +58,7 @@ Example: ssh -i ~/Desktop/code/sysadmin/bc-prod.pem ubuntu@54.148.0.119:/tmp
 
 ***Move to URL, using the path that corresponds with the build's name-of-thing***
 
-- sudo cp -R * /var/www/html/row-permit-calculator
+- sudo cp -R * /var/www/html/row-permit-calculator/
+* Need trailing slahs on this too! 
 
 ###### Hooray!
