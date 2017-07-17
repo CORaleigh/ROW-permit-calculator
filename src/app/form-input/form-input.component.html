@@ -42,7 +42,7 @@
       </div>
 
       <div style="display:block">
-        <button md-icon-button (click)="getPreviousFrontage()" *ngIf="frontages.length > 1 && frontageIndex > 0" mdTooltip="Previous Building Type"><md-icon>keyboard_arrow_left</md-icon></button>
+        <button md-icon-button (click)="getPreviousFrontage()" *ngIf="frontages.length > 1 && frontageIndex > 0" mdTooltip="Previous Obstruction Type"><md-icon>keyboard_arrow_left</md-icon></button>
         <button md-icon-button (click)="getNextFrontage()" *ngIf="frontages.length > 1 && frontageIndex != frontages.length - 1" mdTooltip="Add A Permit"><md-icon>keyboard_arrow_right</md-icon></button>           
         <button (click)="addFrontage()" md-button mdTooltip="Add New Frontage">ADD FRONTAGE</button>
         <!--<button md-button (click)="removeCard(cards, i)" *ngIf="cards.length > 1" mdTooltip="Remove This Permit">REMOVE </button>-->
