@@ -47,7 +47,8 @@ export class CalculatorOutputComponent implements OnInit {
     let changes = this.differ.diff(card);
      if(changes && !this.flipCardToggle) {
           changes.forEachChangedItem(r => {
-
+            //console.log(r); 
+            //console.log(card); 
         if(r.key == "cardIndex") {
           //console.log('current card index', this.currentCardIndex, 'card index', this.cardIndex);
           
@@ -83,7 +84,7 @@ export class CalculatorOutputComponent implements OnInit {
           }
         }
             
-        if (r.key !="cardIndex" && ( r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != {} && card.streetName != {}) {
+        if (r.key !="cardIndex" && ( r.currentValue != "") && card.startDate != "" && card.endDate != "" && card.streetClosureType != "" && card.streetName != {}) {
           //console.log(r.key);
 
           if(r.currentValue != r.previousValue){
