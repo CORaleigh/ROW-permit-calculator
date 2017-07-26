@@ -43,6 +43,10 @@ export class CalculatorOutputComponent implements OnInit {
     
   }
 
+  reset() {
+    window.location.reload(); 
+  }
+
   cardChangesLaunchCalculation(card) {
     let changes = this.differ.diff(card);
      if(changes && !this.flipCardToggle) {

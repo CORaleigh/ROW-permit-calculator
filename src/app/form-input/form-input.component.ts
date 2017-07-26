@@ -115,7 +115,6 @@ export class FormInputComponent implements OnInit {
     // this.cardIndex -= 1;
   }  
 
-
   getPreviousCard() {
     this.cardIndex -= 1;
     this.flipCardToggle = true; 
