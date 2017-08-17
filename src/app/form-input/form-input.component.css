@@ -24,3 +24,7 @@ md-input-container {
     margin-left: 0px;
   }
 }
+
+#frontage-name {
+    border: none; 
+}

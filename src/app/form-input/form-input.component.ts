@@ -28,6 +28,8 @@ export class FormInputComponent implements OnInit {
   flipCardToggle: boolean = false; 
   dailyFeeTotal: number = 0;
   selectedObstructions: Array<Obstruction>;ˇ
+  frontageName: any;
+  frontageNamesDict: any = {};  
   private reviewInfo: any;
   private startDate: any;
   private endDate: any;
@@ -79,6 +81,11 @@ export class FormInputComponent implements OnInit {
 
   onClose(e) {
     this.flipCardToggle = e; 
+  }
+
+  setFrontageName(){
+    this.frontageNamesDict[this.frontageIndex] = this.frontageName;  
+    console.log(this.frontageNamesDict);
   }
 
   addCard() {
@@ -136,6 +143,7 @@ export class FormInputComponent implements OnInit {
   }
 
   addFrontage() {
+    this.frontageName = ""; 
     this.checked = false;  
     this.cards = [];
     this.cardIndex = -1; 
