@@ -85,7 +85,7 @@ export class FormInputComponent implements OnInit {
 
   setFrontageName(){
     this.frontageNamesDict[this.frontageIndex] = this.frontageName;  
-    console.log(this.frontageNamesDict);
+    //console.log(this.frontageNamesDict);
   }
 
   addCard() {
@@ -133,11 +133,13 @@ export class FormInputComponent implements OnInit {
   }
 
   getPreviousFrontage() {
+    this.frontageName = "";     
     this.frontageIndex -= 1; 
     this.flipCardToggle = true; 
   }
 
   getNextFrontage() {
+    this.frontageName = "";     
     this.frontageIndex += 1;
     this.flipCardToggle = true;
   }

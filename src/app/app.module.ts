@@ -19,6 +19,7 @@ import * as moment from 'moment';
 import { PermitListingComponent } from './permit-listing/permit-listing.component';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
 import { SplashDialogComponent } from './splash-dialog/splash-dialog.component';
+import { ExportButtonComponent } from './export-button/export-button.component';
 
 
 
@@ -29,7 +30,8 @@ import { SplashDialogComponent } from './splash-dialog/splash-dialog.component';
     CalculatorOutputComponent,
     PermitListingComponent,
     DialogContentComponent,
-    SplashDialogComponent
+    SplashDialogComponent,
+    ExportButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -31,6 +31,7 @@
     "moment": "^2.18.1",
     "mydatepicker": "^2.0.3",
     "mydaterangepicker": "^4.1.2",
+    "pdfmake": "^0.1.32",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },

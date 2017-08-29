@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, KeyValueDiffers } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PermitCard } from '../permit-card';
+import { GatherCalc } from '../gather-calc';
 import * as moment from 'moment';
 
 @Component({
@@ -16,6 +17,7 @@ export class CalculatorOutputComponent implements OnInit {
   @Input() frontageIndex: number;
   @Input() dateDirectory: any = {};
   @Input() flipCardToggle: boolean; 
+  @Input() frontageNamesDict: any; 
   @Output() close: EventEmitter<any> = new EventEmitter();
   sourceOfTruthReviewFeeArray: any = [];
   lengthOfArrayOfPermitCards: number = 1; 
@@ -25,6 +27,7 @@ export class CalculatorOutputComponent implements OnInit {
   totalTotal: number = 0;
   differ: any; 
   permitcard: PermitCard;
+  dailyFeesArray: any = [];
 
   constructor(private differs: KeyValueDiffers) { 
     this.differ = differs.find({}).create(null);
@@ -154,10 +157,10 @@ export class CalculatorOutputComponent implements OnInit {
 
     this.dailyFeeTotal = 0; 
     
-    let dailyFeesArray: any = []; 
+    // let dailyFeesArray: any = []; 
     for(var i = 0; i < dateDirectoryKeys.length; i++) {
       //console.log('first',this.dateDirectory[dateDirectoryKeys[i]]); 
-      dailyFeesArray = []; 
+      this.dailyFeesArray = []; 
       for(var j = 0; j <= this.frontageIndex ; j++) {
         var counter: number = 0;
         if(this.dateDirectory[dateDirectoryKeys[i]].daily[j]) {
@@ -167,18 +170,18 @@ export class CalculatorOutputComponent implements OnInit {
             
            if(this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee > counter) {
              counter = this.dateDirectory[dateDirectoryKeys[i]].daily[j][k].fee; 
-             dailyFeesArray.push(counter);
+             this.dailyFeesArray.push(counter);
            } 
           }  
         }
       } 
 
-      if(dailyFeesArray.length == 0) {
-        dailyFeesArray = [0]; //correcting for potential error with the misc. house moves that have no daily fee
+      if(this.dailyFeesArray.length == 0) {
+        this.dailyFeesArray = [0]; //correcting for potential error with the misc. house moves that have no daily fee
       }
       
       //console.log('investigating matt error', dailyFeesArray);
-      let dailySum: number = dailyFeesArray.reduce((prev, curr) => prev + curr);  
+      let dailySum: number = this.dailyFeesArray.reduce((prev, curr) => prev + curr);  
       this.dailyFeeTotal += dailySum; 
       //console.log(this.dailyFeeTotal); 
     }
