@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, KeyValueDiffers, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, KeyValueDiffers, DoCheck, EventEmitter, Output } from '@angular/core';
 import { PermitCard } from '../permit-card';
 import { image } from './image'; 
 import { GatherCalc } from '../gather-calc'; 
@@ -23,7 +23,10 @@ export class ExportButtonComponent implements OnInit {
   @Input() cardIndex: number;
   @Input() frontageIndex: number; 
   @Input() frontages: Array<Array<PermitCard>>; 
-  @Input() frontageNamesDict: any;
+  @Input() totalTotal: number;
+  @Input() reviewFeeTotal: number; 
+  @Input() pdfTable: any; 
+ 
 
 
   // class specific properties
@@ -36,22 +39,24 @@ export class ExportButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngDoCheck() {
-    //let frontageChanges = this.differ.diff(this.frontages);
-    let cardChanges = this.differ.diff(this.frontages[this.frontageIndex]);
+  // ngDoCheck() {
+  //   //let frontageChanges = this.differ.diff(this.frontages);
+  //   let cardChanges = this.differ.diff(this.frontages[this.frontageIndex]);
+  //   //let costPerFrontage: any = {}; 
 
-    if(cardChanges) {
-      this.generateTableRows(); 
-    }
-  }
+  //   if(cardChanges) {
+  //     this.generateTableRows(); 
+       
+  //   }
+  // }
 
-  generateTableRows() {
-    for (const frontage of this.frontages){
-      for(const permitcard of frontage){
-        this.gather.calc(permitcard);
-      }  
-    }
-  }
+  // generateTableRows() {
+  //   for (const frontage of this.frontages){
+  //     for(const permitcard of frontage){
+  //       this.gather.calc(permitcard, this.cardIndex, this.frontageIndex, this.frontages);
+  //     }  
+  //   }
+  // }
 
   exportPdf() {
     pdfmake.vfs = pdfFonts.pdfMake.vfs;
@@ -59,7 +64,6 @@ export class ExportButtonComponent implements OnInit {
     console.log(this.cardIndex);
     console.log(this.frontageIndex);
     console.log(this.frontages);
-    console.log(this.frontageNamesDict);
     console.log(this.dailyFeesArray);
     
 
@@ -186,22 +190,7 @@ export class ExportButtonComponent implements OnInit {
             alignment: 'center',
             fillColor: '#eeeeee'
           }, {
-            text: 'Obstruction Type',
-            style: 'tableHeader',
-            alignment: 'center',
-            fillColor: '#eeeeee'
-          }, {
-            text: 'Date Range',
-            style: 'tableHeader',
-            alignment: 'center',
-            fillColor: '#eeeeee'
-          }, {
-            text: 'Daily Fee',
-            style: 'tableHeader',
-            alignment: 'center',
-            fillColor: '#eeeeee'
-          },{
-            text: 'Review Fee',
+            text: 'Cost',
             style: 'tableHeader',
             alignment: 'center',
             fillColor: '#eeeeee'
@@ -209,33 +198,7 @@ export class ExportButtonComponent implements OnInit {
         ]
       }
     };
-    // this.cards.forEach(card => {
-    //   if (card.building.group && card.construction.key && card.constructScope.name && card.squareFeet) {
-    //     table.table.body.push([{
-    //       text: card.building.group,
-    //       style: '',
-    //       alignment: 'left',
-    //       fillColor: ''
-    //     }, {
-    //       text: card.construction.key.toString(),
-    //       style: '',
-    //       alignment: 'left',
-    //       fillColor: ''
-    //     }, {
-    //       text: card.constructScope.name,
-    //       style: '',
-    //       alignment: 'left',
-    //       fillColor: ''
-    //     }, {
-    //       text: card.squareFeet.toLocaleString(undefined, {
-    //         minimumFractionDigits: 0
-    //       }),
-    //       style: '',
-    //       alignment: 'right',
-    //       fillColor: ''
-    //     }]);
-    //   }
-    // });
+    
 
     // docDefinition.content.push(table);
     // docDefinition.content.push({
@@ -270,18 +233,20 @@ export class ExportButtonComponent implements OnInit {
     //     ]
     //   }
     // };
-    // table.table.body.push([{
-    //   text: 'Building Permit',
-    //   style: '',
-    //   alignment: 'left',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.building.value).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
+
+    table.table.body.push([{
+      text: this.pdfTable[0],
+      style: '',
+      alignment: 'left',
+      fillColor: ''
+    }, {
+      text: '$' + (this.pdfTable).toLocaleString(undefined, {
+        minimumFractionDigits: 0
+      }),
+      style: '',
+      alignment: 'right',
+      fillColor: ''
+    
     // }, {
     //   text: '$' + this.calculations.building.tech.toLocaleString(undefined, {
     //     minimumFractionDigits: 0
@@ -289,151 +254,9 @@ export class ExportButtonComponent implements OnInit {
     //   style: '',
     //   alignment: 'right',
     //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.building.value + this.calculations.building.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }]);
-    // table.table.body.push([{
-    //   text: 'Electrical Permit',
-    //   style: '',
-    //   alignment: 'left',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.electrical.value).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + this.calculations.electrical.tech.toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.electrical.value + this.calculations.electrical.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }]);
-    // table.table.body.push([{
-    //   text: 'Mechanical Permit',
-    //   style: '',
-    //   alignment: 'left',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.mechanical.value).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + this.calculations.mechanical.tech.toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.mechanical.value + this.calculations.mechanical.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }]);
-    // table.table.body.push([{
-    //   text: 'Plumbing Permit',
-    //   style: '',
-    //   alignment: 'left',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.plumbing.value).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + this.calculations.plumbing.tech.toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.plumbing.value + this.calculations.plumbing.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }]);
-    // table.table.body.push([{
-    //   text: 'Plan Review',
-    //   style: '',
-    //   alignment: 'left',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.review.value).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + this.calculations.review.tech.toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
-    // }, {
-    //   text: '$' + (this.calculations.review.value + this.calculations.review.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }]);
-    // table.table.body.push([{
-    //   text: 'Total',
-    //   style: 'tableHeader',
-    //   alignment: 'left',
-    //   fillColor: '#cccccc'
-    // }, {
-    //   text: '$' + (this.calculations.building.value + this.calculations.electrical.value + this.calculations.mechanical.value + this.calculations.plumbing.value + this.calculations.review.value).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }, {
-    //   text: '$' + (this.calculations.building.tech + this.calculations.electrical.tech + this.calculations.mechanical.tech + this.calculations.plumbing.tech + this.calculations.review.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }, {
-    //   text: '$' + (this.calculations.building.value + this.calculations.building.tech + this.calculations.electrical.value + this.calculations.electrical.tech + this.calculations.mechanical.value + this.calculations.mechanical.tech + this.calculations.plumbing.value + this.calculations.plumbing.tech + this.calculations.review.value + this.calculations.review.tech).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: 'tableHeader',
-    //   alignment: 'right',
-    //   fillColor: '#cccccc'
-    // }]);
+    }]);
     docDefinition.content.push(table);
-    let file = (this.frontageNamesDict.name) ? this.frontageNamesDict.name : 'right-of-way-permit-fees.pdf';
+    let file = 'right-of-way-permit-fees.pdf';
     pdfmake.createPdf(docDefinition).download(file);
   }
 

@@ -28,6 +28,10 @@ export class CalculatorOutputComponent implements OnInit {
   differ: any; 
   permitcard: PermitCard;
   dailyFeesArray: any = [];
+  largestDailyFeesDirectory: any = {};
+  dateDirectoryPerFrontage: any = {}; 
+  pdfTable: any = {}; 
+
 
   constructor(private differs: KeyValueDiffers) { 
     this.differ = differs.find({}).create(null);
@@ -192,10 +196,103 @@ export class CalculatorOutputComponent implements OnInit {
 
     this.lengthOfArrayOfPermitCards = this.frontages[this.frontageIndex].length; 
 
+    this.generateCostByFrontage(card); 
+
     this.close.emit(false); 
 
     
 
+  }
+
+  generateCostByFrontage(card) {
+
+ 
+    let dailyFee = ""; 
+    if(card.streetClosureType) {
+        dailyFee = card.streetClosureType.dailyFee;
+    } 
+
+    let startDate = new Date(card.startDate);
+    let endDate = new Date(card.endDate);
+    let a: any = moment(endDate);
+    let b: any = moment(startDate);
+    let diffDays = a.diff(b, 'days');
+    let dateDirectoryKeys: any = [];
+    //let dailyFeeTotal: number = 0;
+
+    //create the map of dates as keys given the date range
+    for(var i = 1; i < (diffDays + 2); i++) { 
+        
+        let newDate: any = moment(startDate).add(i, 'days'); 
+        newDate.format("MM-DD-YYYY"); 
+
+        if(this.dateDirectoryPerFrontage[newDate]) {
+            if(this.dateDirectoryPerFrontage[newDate][this.frontageIndex] != undefined){
+                this.dateDirectoryPerFrontage[newDate][this.frontageIndex] = [];
+                this.dateDirectoryPerFrontage[newDate][this.frontageIndex].push(dailyFee);
+            } 
+
+        } else {
+                this.dateDirectoryPerFrontage[newDate] = {
+                    [this.frontageIndex]: [dailyFee]
+                    }; 
+                }
+
+        } 
+        
+        dateDirectoryKeys = Object.keys( this.dateDirectoryPerFrontage );
+        
+
+
+    if(!this.largestDailyFeesDirectory[this.frontageIndex]) {
+        this.largestDailyFeesDirectory[this.frontageIndex] = []; 
+    }
+
+    this.largestDailyFeesDirectory[this.frontageIndex] = []; 
+    for(var i = 0; i < dateDirectoryKeys.length; i++) {
+        
+        for(var j = 0; j <= this.frontageIndex ; j++) {
+        var counterForFeeByFr: number = 0;
+        if(this.dateDirectoryPerFrontage[dateDirectoryKeys[i]][j] && j == this.frontageIndex) {
+           
+            for(var k = 0; k < this.dateDirectoryPerFrontage[dateDirectoryKeys[i]][j].length; k++) {
+              
+            
+            if(this.dateDirectoryPerFrontage[dateDirectoryKeys[i]][j][k] > counterForFeeByFr) {
+              counterForFeeByFr = this.dateDirectoryPerFrontage[dateDirectoryKeys[i]][j][k]; 
+                } 
+
+            this.largestDailyFeesDirectory[this.frontageIndex].push(counterForFeeByFr);
+            } 
+              
+        }
+    }   
+        
+    }
+    console.log('largest daily fees by frontage', this.largestDailyFeesDirectory);
+
+    //return this.largestDailyFeesDirectory;
+    this.generateTableForPdf();  
+  }
+
+  generateTableForPdf() {
+    for(var n = 0; n <= this.frontageIndex; n++) {
+
+      if(this.largestDailyFeesDirectory[n].length > 1) {
+        this.largestDailyFeesDirectory[n] = this.largestDailyFeesDirectory[n].reduce((prev, curr) => prev + curr);                    
+        }
+
+      } 
+
+    let fees = this.largestDailyFeesDirectory; 
+    let names = this.frontageNamesDict; 
+
+    for(var i = 0; i <= this.frontageIndex; i++){
+      this.pdfTable = {
+        [this.frontageNamesDict[i]] : this.largestDailyFeesDirectory[i]
+      }
+    }
+    //console.log(this.pdfTable); 
   }
 
 }
