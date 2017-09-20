@@ -30,6 +30,7 @@ export class ExportButtonComponent implements OnInit {
 
 
   // class specific properties
+  frontageDirectoryKeys: any = {}; 
   dailyFeesArray: any = [];
   dateDirectory: any = {};
   tableRowsArray: any = []; 
@@ -39,26 +40,9 @@ export class ExportButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  // ngDoCheck() {
-  //   //let frontageChanges = this.differ.diff(this.frontages);
-  //   let cardChanges = this.differ.diff(this.frontages[this.frontageIndex]);
-  //   //let costPerFrontage: any = {}; 
-
-  //   if(cardChanges) {
-  //     this.generateTableRows(); 
-       
-  //   }
-  // }
-
-  // generateTableRows() {
-  //   for (const frontage of this.frontages){
-  //     for(const permitcard of frontage){
-  //       this.gather.calc(permitcard, this.cardIndex, this.frontageIndex, this.frontages);
-  //     }  
-  //   }
-  // }
 
   exportPdf() {
+    this.frontageDirectoryKeys = Object.keys( this.pdfTable );
     pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
     console.log(this.cardIndex);
@@ -135,45 +119,7 @@ export class ExportButtonComponent implements OnInit {
       },
       image: this.image
     });
-    // docDefinition.content.push({
-    //   text: 'Building and Trade Permit Calculator',
-    //   style: 'titleHeader',
-    //   absolutePosition: {
-    //     x: 120,
-    //     y: 90
-    //   }
-    // });
-    // docDefinition.content.push({
-    //   text: 'frontageNamesDict Details',
-    //   style: 'subheader'
-    // });
-    // if (this.frontageNamesDict.length > 0) {
-    //   docDefinition.content.push({
-    //     text: 'frontageNamesDict Name',
-    //     style: 'subheader2'
-    //   });
-    //   docDefinition.content.push({
-    //     text: this.frontageNamesDict.name
-    //   });
-    // }
-    // if (this.frontageNamesDict.length > 0) {
-    //   docDefinition.content.push({
-    //     text: 'frontageNamesDict Address',
-    //     style: 'subheader2'
-    //   });
-    //   docDefinition.content.push({
-    //     text: this.frontageNamesDict.address
-    //   });
-    // }
-    // docDefinition.content.push({
-    //   text: 'Valuation',
-    //   style: 'subheader2'
-    // });
-    // docDefinition.content.push({
-    //   text: '$' + Math.ceil(this.calculations.valuation).toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   })
-    // });
+   
 
 
     docDefinition.content.push({
@@ -185,12 +131,12 @@ export class ExportButtonComponent implements OnInit {
       table: {
         body: [
           [{
-            text: 'Frontage',
+            text: 'Frontage/Fee       ',
             style: 'tableHeader',
             alignment: 'center',
             fillColor: '#eeeeee'
           }, {
-            text: 'Cost',
+            text: 'Fee        ',
             style: 'tableHeader',
             alignment: 'center',
             fillColor: '#eeeeee'
@@ -198,64 +144,58 @@ export class ExportButtonComponent implements OnInit {
         ]
       }
     };
-    
 
-    // docDefinition.content.push(table);
-    // docDefinition.content.push({
-    //   text: 'Fee Details',
-    //   style: 'subheader'
-    // });
-    // table = {
-    //   style: 'tableExample',
-    //   table: {
-    //     body: [
-    //       [{
-    //         text: 'Description',
-    //         style: 'tableHeader',
-    //         alignment: 'center',
-    //         fillColor: '#eeeeee'
-    //       }, {
-    //         text: 'Cost',
-    //         style: 'tableHeader',
-    //         alignment: 'center',
-    //         fillColor: '#eeeeee'
-    //       }, {
-    //         text: 'Technology Fee',
-    //         style: 'tableHeader',
-    //         alignment: 'center',
-    //         fillColor: '#eeeeee'
-    //       }, {
-    //         text: 'Total',
-    //         style: 'tableHeader',
-    //         alignment: 'center',
-    //         fillColor: '#eeeeee'
-    //       }]
-    //     ]
-    //   }
-    // };
+
+    for(const frontage in this.pdfTable) {
+      table.table.body.push([{
+        text: frontage,
+        style: '',
+        alignment: 'left',
+        fillColor: ''
+      }, {
+        text: '$' + this.pdfTable[frontage],
+        style: '',
+        alignment: 'left',
+        fillColor: ''
+      }]);
+    }
 
     table.table.body.push([{
-      text: this.pdfTable[0],
+      text: 'Permit        ',
       style: '',
       alignment: 'left',
       fillColor: ''
     }, {
-      text: '$' + (this.pdfTable).toLocaleString(undefined, {
-        minimumFractionDigits: 0
-      }),
+      text: '$' + this.reviewFeeTotal,
       style: '',
-      alignment: 'right',
+      alignment: 'left',
       fillColor: ''
-    
-    // }, {
-    //   text: '$' + this.calculations.building.tech.toLocaleString(undefined, {
-    //     minimumFractionDigits: 0
-    //   }),
-    //   style: '',
-    //   alignment: 'right',
-    //   fillColor: ''
     }]);
+
+
+    let totalTable = {
+      style: 'tableExample',
+      table: {
+        body: [
+          [{
+            text: 'Total       ',
+            style: 'tableHeader',
+            alignment: 'center',
+            fillColor: '#eeeeee'
+          }, {
+            text: '$' + this.totalTotal,
+            style: 'tableHeader',
+            alignment: 'center',
+            fillColor: '#eeeeee'
+          }]
+        ]
+      }
+    };
+
+    
+
     docDefinition.content.push(table);
+    docDefinition.content.push(totalTable);
     let file = 'right-of-way-permit-fees.pdf';
     pdfmake.createPdf(docDefinition).download(file);
   }

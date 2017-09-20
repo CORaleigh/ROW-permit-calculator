@@ -228,9 +228,11 @@ export class CalculatorOutputComponent implements OnInit {
 
         if(this.dateDirectoryPerFrontage[newDate]) {
             if(this.dateDirectoryPerFrontage[newDate][this.frontageIndex] != undefined){
-                this.dateDirectoryPerFrontage[newDate][this.frontageIndex] = [];
+                //this.dateDirectoryPerFrontage[newDate][this.frontageIndex] = [];
                 this.dateDirectoryPerFrontage[newDate][this.frontageIndex].push(dailyFee);
-            } 
+            } else {
+              this.dateDirectoryPerFrontage[newDate][this.frontageIndex] = [dailyFee]; 
+            }
 
         } else {
                 this.dateDirectoryPerFrontage[newDate] = {
@@ -269,6 +271,8 @@ export class CalculatorOutputComponent implements OnInit {
     }   
         
     }
+    console.log('date dir ', this.dateDirectory); 
+    console.log('date dir per frontage', this.dateDirectoryPerFrontage); 
     console.log('largest daily fees by frontage', this.largestDailyFeesDirectory);
 
     //return this.largestDailyFeesDirectory;
@@ -278,8 +282,8 @@ export class CalculatorOutputComponent implements OnInit {
   generateTableForPdf() {
     for(var n = 0; n <= this.frontageIndex; n++) {
 
-      if(this.largestDailyFeesDirectory[n].length > 1) {
-        this.largestDailyFeesDirectory[n] = this.largestDailyFeesDirectory[n].reduce((prev, curr) => prev + curr);                    
+      if(this.largestDailyFeesDirectory[n].length > 0) {
+        this.largestDailyFeesDirectory[n] = this.largestDailyFeesDirectory[n].reduce((prev, curr) => prev + curr, 0);                    
         }
 
       } 
@@ -287,12 +291,12 @@ export class CalculatorOutputComponent implements OnInit {
     let fees = this.largestDailyFeesDirectory; 
     let names = this.frontageNamesDict; 
 
-    for(var i = 0; i <= this.frontageIndex; i++){
-      this.pdfTable = {
-        [this.frontageNamesDict[i]] : this.largestDailyFeesDirectory[i]
+    for(var m = 0; m <= this.frontageIndex; m++){
+      if(!this.pdfTable[this.frontageNamesDict[m]]) {
+        this.pdfTable[this.frontageNamesDict[m]] = this.largestDailyFeesDirectory[m]; 
       }
     }
-    //console.log(this.pdfTable); 
+    console.log(this.pdfTable); 
   }
 
 }
