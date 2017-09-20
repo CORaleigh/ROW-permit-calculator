@@ -3,7 +3,7 @@
   <md-card *ngIf="i === cardIndex" class="example-card">
 
     <md-card-header>
-      <md-card-title><h5><input (keyup)="setFrontageName()" id="frontage-name" [(ngModel)]="this.frontageName" name="frontage-name" placeholder="Frontage Name"></h5></md-card-title>
+      <md-card-title><h5><input (keyup)="setFrontageName()" id="frontage-name" [(ngModel)]="this.frontageName" name="frontage-name" placeholder="Enter Frontage Name"></h5></md-card-title>
       <md-card-title><h4>{{this.frontageNamesDict[this.frontageIndex]}}</h4></md-card-title>
       <md-card-title><h3>Obstruction #{{this.cardIndex + 1}}</h3></md-card-title>
     </md-card-header>
